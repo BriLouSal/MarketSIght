@@ -8,7 +8,9 @@ Roadmap
     - 
     In progress 
     
-        Investment Strategies ~ Shareable with Communities to follow
+      Search Engine: Yahoo API calls, etc.
+      OpenAI: Information about Stocks using OpenAI API
+      Investment Strategies ~ Shareable with Communities to follow
         Adding Reputation System by using Upvotes system, and Downvote system
     
 
