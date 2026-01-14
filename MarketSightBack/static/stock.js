@@ -1,0 +1,344 @@
+// Now we wanna create a UI Client Side to create for 
+
+
+// Fix these syntax errors later
+const ctx = document.getElementById('stockGraph').getContext('2d');
+
+// Graph for the Stock
+let myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: chartLabels, // From my Django connected via stock.html
+        datasets: [{
+            label: `${stockTicker} Price`,
+            data: chartPrices, 
+            borderColor: '#3b82f6',
+            fill: true,
+            tension: 0.1,
+            backgroundColor: graph_colour(),
+        }]
+    },
+    options: {
+        responsive: true,          
+        maintainAspectRatio: false, 
+        scales: {
+            x: {
+                ticks : {
+                    maxTicksLimit: 10,
+                    autoSkip: true
+
+                },
+                grid: {
+                    display: false
+
+                }
+            }
+
+        },
+    }
+});
+
+function graph_colour() {
+    const currentPrice = chartPrices[chartPrices.length - 1];
+    const previousPrice = Chart_yesterday_price;
+    // Stock currentPrice should be green!
+    if (currentPrice > previousPrice) return '#36ff0f';
+
+    // If the price of the stock is same, return blue (normal colour:)
+    else if (currentPrice === previousPrice) return '#7df0ff';
+
+    // Else it should be red
+    else return '#FF3131';
+
+
+
+    
+}
+console.log(myChart.data.datasets[0].data, "HI");
+
+
+
+setInterval(graph_colour, 10000);
+graph_colour();
+
+// Buttoms
+const buttons = document.querySelectorAll('.interval')
+
+function buttonUpdate() {
+    buttons.forEach(btn => {
+        btn.addEventListener('click', async function() {
+            buttons.forEach(b => {
+                b.classList.remove('bg-blue-500', 'text-white'); 
+                b.classList.add('bg-blue-800', 'text-gray-950');
+            });
+
+            this.classList.remove('bg-blue-800', 'text-gray-950');
+            this.classList.add('bg-blue-500', 'text-white');
+
+            const interval = this.getAttribute('data-interval');
+            // console.log("Fetching data for:", interval);
+        const response = await fetch(`/api/json_data_api/${stockTicker}/${interval}/`);
+
+        const data = await response.json();
+    
+        myChart.data.labels = data.labels;
+        myChart.data.datasets[0].data = data.prices.map(Number);
+
+        myChart.update();
+
+
+
+        });
+    });
+}
+buttonUpdate();
+
+// Graph Animation
+gsap.from(ctx, {
+    opacity: 0,
+    y: 50,
+    duration: 1.5,
+    ease: 'power3.out',
+})
+
+setInterval(StockUpdate, 10000);
+StockUpdate();
+
+
+const PriceData = document.querySelector(".livePrice"); 
+
+async function StockUpdate(){
+    // Grab update on Stock Price by calling our urls.py that is connected with our views
+    const symbolPrice = await fetch(`/api/latest-price/${stockTicker}/`);
+    // Return in JSON
+    const data = await symbolPrice.json();
+
+    // Error Handling
+    if (!PriceData || data === undefined) return;   
+    // Parse it into a float for JS
+    const newPrice = parseFloat(data.price);
+    const oldPrice = parseFloat(PriceData.dataset.last || newPrice);
+
+    PriceData.dataset.last = newPrice;
+    PriceData.innerText = `$${newPrice.toFixed(2)}`; 
+    // Inspired by Yahoo Finance:
+    if (newPrice > oldPrice){
+        PriceData.classList.add('text-green-600');
+        setTimeout(() => PriceData.classList.remove('text-green-600'), 500);
+    } 
+    else if (newPrice < oldPrice) {
+        PriceData.classList.add('text-red-600'); 
+        setTimeout(() => PriceData.classList.remove('text-red-600'), 500);
+    }
+
+    
+
+
+
+}
+// Grab the Card div to create a gsap animation
+
+
+
+const cards = document.querySelectorAll('.flexcard')
+
+
+// Animation :)
+
+gsap.from(cards, {
+    opacity: 0,
+    y: 100,
+    duration: 1.5,
+    ease: 'power3.out',
+    onUpdate() {
+         chart.update('none')
+    }
+
+})
+
+
+// Create a function to grab the colors of the bullish indicator
+// Create a function to grab the colors of the bullish indicator
+const score = points
+
+function pieGraphColor(score) {
+  if (score < 20) return '#d32f2f';
+  if (score < 40) return '#f57c00';
+  if (score < 60) return '#fbc02d';
+  if (score < 80) return '#7cb342';
+  return '#2e7d32';
+}
+
+
+// Add centre text for bulish indicator
+const centerText = {
+  id: 'centerText',
+  afterDraw(chart) {
+    const { ctx, chartArea: { width, height } } = chart;
+    ctx.save();
+
+
+    ctx.font = 'bold 12px sans-serif';
+    ctx.fillStyle = '#ffffff';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('Bullish Indicator', width / 2, height / 2 - 30);
+
+
+    //  Muddle
+    ctx.font = 'bold 26px sans-serif';
+    ctx.fillStyle = '#ffffff';
+    ctx.fillText(`${score}%`, width / 2, height / 2) ;
+
+    // Subtitle 
+    ctx.font = ' 14px sans-serif';
+    ctx.fillStyle = '#ffffff';
+    ctx.fillText(`Bullish Score`, width / 2, height / 2 + 28) ;
+    ctx.restore();
+  }
+};
+
+// Grab the chart for bullish indicator
+const ctx_chart = document.getElementById("bullishIndicator")
+
+const chart = new Chart(ctx_chart, {
+    type: "doughnut",
+    plugins: [centerText],
+    data: {                                  
+        datasets: [{
+            data: [0.001, 99.999],
+            backgroundColor: [pieGraphColor(score), "#eeeeee"],
+            borderWidth: 0
+        }]
+    },
+});
+
+let animation_score = {v: 0}
+
+gsap.to(animation_score, {
+    v: score,
+    duration: 1.5,
+    ease: 'power3.out',
+    onUpdate(){
+        const v = Math.max(animation_score.v, 0.0001);
+
+        chart.data.datasets[0].data = [v, 100 - v];
+        chart.data.datasets[0].backgroundColor = [pieGraphColor(v), '#222831'];
+
+        chart.update('none');
+    }
+})
+
+// Breakdown. We would use onUpdate() on our chart.js for doughnut and we shuld have our value empty first, so data is [0,100] and append the score on [0] index. Data[0, 100 - score]
+
+
+
+// Grab the div class for the sales buttons, etc.
+
+
+
+
+const buy_button = document.getElementById('buy-button');
+const sell_button = document.getElementById('sell-button');
+const text_changer = document.getElementById('text-changer');
+const input_changer = document.getElementById('input-changer');
+const button_execute_order = document.getElementById('button-execute');
+const form_execution = document.getElementById('form_execute');
+
+
+
+// If the button is clicked, we want to also grab the url for the stockOrders which will be worked on early (so we're gonna add that feature later)
+buy_button.addEventListener('click', (e) => {
+    e.preventDefault();
+    text_changer.innerHTML =  `Buy some ${stockTicker}`;
+    input_changer.placeholder = `Buy some ${stockTicker}`;
+    button_execute_order.innerHTML = `BUY`;
+
+    // Do the logic of buttons
+    buy_button.classList.replace('bg-blue-700', 'bg-blue-400');
+    sell_button.classList.replace('bg-blue-400', 'bg-blue-700');
+    // const order =  fetch(`trade/<str:ticker>/<str:order_type>/`)
+
+    form_execution.action = `/trade/${stockTicker}/BUY/`;
+
+
+})
+
+
+sell_button.addEventListener('click', (e) => {
+    e.preventDefault();
+    text_changer.innerHTML =  `Sell some ${stockTicker}`;
+    input_changer.placeholder = `Sell some ${stockTicker}`;
+
+    // Do the logic of buttons
+    sell_button.classList.replace('bg-blue-700', 'bg-blue-400');
+    buy_button.classList.replace('bg-blue-400', 'bg-blue-700');
+    button_execute_order.innerHTML = `SELL`;
+    form_execution.action = `/trade/${stockTicker}/SELL/`;
+
+
+})
+
+// So what we wanna do is add a confirmation using swal js package, and also notification after it.
+
+// https://sweetalert2.github.io/ REMINDER
+form_execution.addEventListener('submit', function(e) {
+    e.preventDefault();
+    //  Grab Button: Are you sure you wanna `${action}` `${amount}` of stock?
+
+
+
+    const action = button_execute_order.innerText
+    const amount =  input_changer.value || input_changer.innerText;
+
+    // Mandatory for confirmation.
+    Swal.fire({
+    title: 'Confirm Order',
+    text: `Are you sure you want to ${action} ${amount} shares of ${stockTicker}?`,
+    showDenyButton: true,
+    confirmButtonText: 'Yes, execute the order',
+    denyButtonText: `No, please don't excute the order`,
+    customClass: {
+        actions: 'my-actions',
+        confirmButton: 'order-1',
+        denyButton: 'order-1',
+    },
+    }).then((result) => {
+    if (result.isConfirmed) {
+        sessionStorage.setItem('orderStatus', 'success'); 
+        sessionStorage.setItem('orderMessage', `Successfully executed ${action} ${amount} stock!`);
+        form_execution.submit(); 
+
+    } else if (result.isDenied) {
+        Swal.fire('Order cancelled', '', 'info');
+    }
+    })
+
+})
+
+// Fetch the data for the buttons later, and put it inside the eventlistener :)
+
+// Fetched from the form_execution data
+document.addEventListener('DOMContentLoaded' , () =>{
+
+    const status = sessionStorage.getItem('orderStatus');
+    const messaage = sessionStorage.getItem('orderMessage');
+    if (status && message) {
+        Swal.fire({
+            icon: status, // 'success', 'info', 'warning', 'error', 'question'
+            title: 'Notification',
+            text: message,
+            timer: 3000, 
+            showConfirmButton: false,
+            position: 'top-end', 
+            toast: true
+        });
+        
+        // Clear the storage immediately after showing the alert
+        sessionStorage.removeItem('orderStatus');
+        sessionStorage.removeItem('orderMessage');
+    }
+
+
+
+});

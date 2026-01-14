@@ -1,0 +1,81 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="stylesheet" href="{% static 'news.css' %}">
+   <title>Document</title>
+   
+</head>
+<body>
+
+   
+   <nav>
+      <div class="navbar">
+      <a href="{% url 'assistance' %}">Support</a>
+      <a href="{% url 'room' %}">Portfolio</a>
+      <a href="{% url 'home' %}">Home</a>
+
+      {% if user.is_authenticated %}
+         <a href="{% url 'logout_page' %}">Logout</a>
+      {% else %}
+         <a href="{% url 'login' %}">Login</a>
+      {% endif %}
+      <a href="{% url 'search' %}">Search</a>
+      <!-- For Portfolio, I wanna have a redirection if the condiition is not met that will make sure users are signed up --> 
+   </div>
+   <button class="drop-down"> 
+      
+
+   </button>
+   </nav>
+
+
+   <!-- Wanna click on the sidebar later on and make it appear -->
+
+   
+
+
+ 
+</div>
+
+
+         <div class="stock_info">
+         <h2>News Summary for {{ request.resolver_match.kwargs.stock_tick }}</h2>
+         <!-- Create Animation for this one later on -->
+         <div class="gen-ai" id="gen-ai-text" data-content="{{ news|safe }}"></div>
+      </div>
+
+
+                  
+
+
+<!-- Yahoo Finance Display -->
+
+
+<!-- News Anaylsis in the Bottom -->
+    <!-- Use AI to indicate bias  -->
+
+
+   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+   <script src="{% static stock.js'%}"></script>
+   
+
+
+
+ 
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,116 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+
+}
+
+body{
+    font-family: 'Poppins', sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+    background-color: #f4f4f4;
+    color: #333;
+    background-image: linear-gradient(to right, #434343 0%, black 100%);
+}
+
+
+
+
+.border{
+    display: flex;
+    justify-content: center;
+    padding: 0;
+    flex-direction: column;
+    align-items: center;
+    
+    border: 2px solid black;
+
+    margin-bottom: 125px;
+
+    width: 20%;
+    height: 60%;
+    margin: 50px auto;
+
+}
+
+
+.border label, input, h1, textarea {
+    font: inherit;
+    size: inherit;
+    border-radius: 25px 25px 25px 25px;
+    display: flex;
+    flex-direction: row;
+    text-decoration: none;
+    font-size: 20px;
+    color: black !important;
+    text-align: center;
+    margin-bottom: 10px;
+    align-items: center;
+}
+
+
+
+.home-button{
+    font: black;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 250px;
+    height: 150px;
+    flex-direction: column;
+    top: 50px;
+    background-color: #007bff;
+    border-radius: 25px 25px 25px 25px;
+
+}
+
+.user_greeted{
+    display: flex;
+    flex-direction: row;
+
+    color: #fff;
+
+    align-items: center;
+    justify-content: center;
+}
+
+.message_noti {
+    display: flex;
+    flex-direction: row;
+    color: #fff;
+
+    font-size: 15px;
+
+    
+}
+
+.home-button h1 {
+    font-size: 20px;
+    color: white !important;
+    margin-bottom: 5px;
+}
+.home-button p {
+    font-size: 14px;
+    color: white !important;
+    text-align: center;
+}
+
+
+.home-button a, input, label {
+    text-decoration: none;
+    color: white !important;
+    font: inherit;
+}
+
+.home-button:hover {
+    background-color: #0056b3;
+    cursor: pointer;
+    transform: scale(1.05);
+    transition: all 0.3s ease;
+}
+

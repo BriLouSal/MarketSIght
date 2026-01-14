@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="stylesheet" href="{% static 'authentication/logout.css' %}">
+    <title>Document</title>
+</head>
+<body>
+
+
+    <div class="navbar">
+
+        <a href="{% url 'search % '}">Search</a>
+
+    </div>
+
+
+    <div class="border">
+
+
+        <h2 class="logout">You're Logged out!</h2>
+        <a href="{% url 'login' %}"> Click here to log in again</a>
+
+    </div>
+    
+
+    
+</body>
+</html>

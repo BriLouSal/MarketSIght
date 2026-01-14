@@ -1,0 +1,119 @@
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Libertinus+Serif:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: 'Poppins', sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+    background-color: #f4f4f4;
+    color: #333;
+    background-image: linear-gradient(to right, #434343 0%, black 100%);
+}
+
+
+
+
+.navbar{
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+    
+}
+
+.navbar a:hover{
+    background: transparent;
+    transform: scale(1.1);
+    box-shadow: 0 0 10px #57A0C1,
+                0 0 20px #57A0C1,
+                0 0 40px #57A0C1,
+                0 0 80px #57A0C1;
+    text-shadow: 0 0 5px #FFF,
+                 0 0 10px #57A0C1,
+                 0 0 20px #57A0C1;
+    transition: all 0.3s ease;
+
+}
+
+
+
+
+a{
+    text-decoration: none;
+    padding: 10px 15px;
+    color: #fff;
+    
+}
+
+.search-bar {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 150px;
+    gap: 15px;
+    font: white;
+
+
+}
+
+.greet_user{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 100px;
+}
+.greet_user p{
+    color: white;
+}
+
+.top-performer h1{
+        font: #fff;
+        font-size: 35px;
+}
+
+.search-bar input[type="text"] {
+    width: 350px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 15px 15px 15px 15px 15px;
+}
+.search-bar button {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    border-radius: 15px 15px 15px 15px 15px;
+    
+}
+
+.search-bar h1 {
+    font-size: 54px;
+    color: #FFFFFF;
+    text-shadow: 0 0 5px #FFF,
+     0 0 20px #FFF, 0 0 15px #FFF, 0 0 20px #57A0C1,
+     0 0 40px #57A0C1, 0 0 40px #57A0C1,
+     0 0 75px #57A0C1,
+     0 0 100px #57A0C1, 2px 2px 4px rgba(87,160,193,0);
+    
+}
+
+.search-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+}
+

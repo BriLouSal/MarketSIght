@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    {% load static %}
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="{% static 'css/Assistance.css' %}"> -->
+     <link rel="stylesheet" href="{% static 'assistance.css' %}">
+    <title>Document</title>
+</head>
+<body>
+     {% block content %}
+
+    <!-- This will be like a border of the card that's gonna have support -->
+
+
+
+
+
+    
+    
+  
+<!-- For this one, we wanna create specific support: input -->
+
+    <div class="user_greeted">
+        <!-- Now we want to use if statements -->
+            
+        {% if user.is_authenticated %}
+            <p>Welcome {{ user.username }}. Please Contact Us
+                if you're having issue with the website. We can gurantee that
+                we can respond in 1-2 Business Days!
+            </p>
+
+        {% else %}
+        <p>
+            Welcome to our Request Support Website. You can expect response from around 2-3 Business Days! Please Login to access the huge resource for your investment, and chat with others about your investment strategy!
+        </p>
+
+    </div>
+
+    {% endif%}
+
+    
+
+        <div class="border">
+            <h1>Contact Us</h1>
+            <form method="POST" action="{% url 'assistance' %}">
+                {% csrf_token %}
+                <label for="name">Name:</label>
+                <input type="text" id="inputbox" name="name" required>
+                <label for="email">Email:</label>
+                <input type="email" id="inputbox" name="email" required>
+                
+                <label for="subject">Subject:</label>
+                <input type="subject" id="inputbox" name="subject" required>
+
+                <label for="message">Message:</label>
+                <textarea id="message" name="message" required></textarea>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+
+
+
+        {% if messages %}
+
+        <div class="message_noti">
+            {% for messages in messages %}
+                <li>{{messages}}</li>
+            
+
+            {% endfor %}
+
+        </div>
+
+
+        {% endif %}
+        
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.14.0/gsap.min.js"></script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.14.0/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.14.0/Draggable.min.js"></script>
+
+
+{% endblock %}
+    
+</body>
+</html>
