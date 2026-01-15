@@ -2,3 +2,4 @@ MarketSightBack/MSOAI.py
 MarketSight/.env
 MarketSightBack/.env
 MarketSightBack/training_models.py
+db.sqlite3

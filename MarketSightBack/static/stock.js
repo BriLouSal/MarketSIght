@@ -306,7 +306,7 @@ form_execution.addEventListener('submit', function(e) {
     }).then((result) => {
     if (result.isConfirmed) {
         sessionStorage.setItem('orderStatus', 'success'); 
-        sessionStorage.setItem('orderMessage', `Successfully executed ${action} ${amount} stock!`);
+        sessionStorage.setItem('orderMessage', `Successfully executed ${action} ${amount} of ${stockTicker}!`);
         form_execution.submit(); 
 
     } else if (result.isDenied) {

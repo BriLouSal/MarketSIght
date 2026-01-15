@@ -285,15 +285,6 @@ def stockOrder(request, ticker, order_type):
 
 
 # We will use the federal rates for this endeavour
-def risk_free_model():
-
-    
-    pass
-# Use PEG Ratio.
-
-def valuation():
-    # PEG ratio formula
-    pass
 
 async def build_stock_analyzer(stock_url, info) -> dict:
     cache_key = f"analysis:{stock_url}"
@@ -367,6 +358,8 @@ def json_data_api(date_api:str, stock: str) -> dict:
     company_name = summary.get("shortName") or summary.get("longName")
     exchange =  summary.get("exchangeName")
     date = summary.get("regularMarketTime")
+
+    market_state = summary.get('marketState')
     
 
 
@@ -446,6 +439,7 @@ def grab_current_price(stock: str) -> dict:
     stock = stock.upper()
     result_search = Ticker(stock)
     price = result_search.history(period="1d")["close"].iloc[-1]
+
     if price > 10:
         return float(round(price, 1))
     elif price > 4.5:
@@ -896,6 +890,7 @@ def portfolio_room(request):
         
         result_search = Ticker(ticker)
         current_price = result_search.history(period="1d")["close"].iloc[-1]
+        
 
         result_of_stock.append({
             'ticker': ticker,
