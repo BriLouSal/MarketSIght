@@ -10,16 +10,16 @@ We've made the Anthropic API work to its perfection and created many features to
 
 ## Demo:
 
-![App DEMO!](https://github.com/BriLouSal/MarketBackApp/blob/main/MarketSight.png)
-![DEMO 2!](https://github.com/BriLouSal/MarketBackApp/blob/main/MarketSight3.png)
-![DEMO 5 NEW UPDATE!](https://github.com/BriLouSal/MarketBackApp/blob/main/MarketSight7.png)
-![DEMO 6 NEW UPDATE!](https://github.com/BriLouSal/MarketBackApp/blob/main/MarketsightLoser.png)
-![DEMO 7 NEW UPDATE!](https://github.com/BriLouSal/MarketBackApp/blob/main/MarketSightStockTradingdemo.png)
-![DEMO 8 NEW UPDATE!](https://github.com/BriLouSal/MarketBackApp/blob/main/MarketSightconfirmation.png)
-![Noti!](https://github.com/BriLouSal/MarketBackApp/blob/main/MarketSightNoti.png)
+![App DEMO!](https://github.com/BriLouSal/MarketSIght/blob/main/MarketSight.png)
+![DEMO 2!](https://github.com/BriLouSal/MarketSIght/blob/main/MarketSight3.png)
+![DEMO 5 NEW UPDATE!](https://github.com/BriLouSal/MarketSIght/blob/main/MarketSight7.png)
+![DEMO 6 NEW UPDATE!](https://github.com/BriLouSal/MarketSIght/blob/main/MarketsightLoser.png)
+![DEMO 7 NEW UPDATE!](https://github.com/BriLouSal/MarketSIght/blob/main/MarketSightStockTradingdemo.png)
+![DEMO 8 NEW UPDATE!](https://github.com/BriLouSal/MarketSIght/blob/main/MarketSightconfirmation.png)
+![Noti!](https://github.com/BriLouSal/MarketSIght/blob/main/MarketSightNoti.png)
 ![StockOrderView!](https://github.com/BriLouSal/MarketSIght/blob/main/StockViewsComplete.png)
 
 ## Experiment (Testing out via Leveraged ETF):
 GOOGLE (JANUARY 7TH 2026 - JANUARY 16TH 2026)
-![GOOG EXPER](https://github.com/BriLouSal/MarketBackApp/blob/main/GOOG_EXPER.png)
+![GOOG EXPER](https://github.com/BriLouSal/MarketSIght/blob/main/GOOG_EXPER.png)
 
