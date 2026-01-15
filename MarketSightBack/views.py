@@ -884,6 +884,9 @@ def portfolio_room(request):
     # Side bar, we'd need the price of the stock (For the graph and url router) 
     # Also grab the percentage of the stock. Use ROI average aggeragation.
     # Add the portoflio's position value of the stock / initial_investment.
+
+
+    # So current value / cost
     for ticker in (list_of_user_stock):
 
         data_required = json_data_api(date_api='1D', stock=ticker)
@@ -908,7 +911,7 @@ def portfolio_room(request):
     }
 
 
-    
+
 
     
 
