@@ -907,6 +907,9 @@ def portfolio_room(request):
         'json_data_set_stocks': json.dumps(result_of_stock)
     }
 
+
+    
+
     
 
 
