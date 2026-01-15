@@ -10,11 +10,7 @@ We've made the Anthropic API work to its perfection and created many features to
 
 ## Demo:
 
-![App DEMO!](https://github.com/BriLouSal/MarketSIght/blob/main/MarketSight.png)
-![DEMO 2!](https://github.com/BriLouSal/MarketSIght/blob/main/MarketSight3.png)
-![DEMO 5 NEW UPDATE!](https://github.com/BriLouSal/MarketSIght/blob/main/MarketSight7.png)
 ![DEMO 6 NEW UPDATE!](https://github.com/BriLouSal/MarketSIght/blob/main/MarketsightLoser.png)
-![DEMO 7 NEW UPDATE!](https://github.com/BriLouSal/MarketSIght/blob/main/MarketSightStockTradingdemo.png)
 ![DEMO 8 NEW UPDATE!](https://github.com/BriLouSal/MarketSIght/blob/main/MarketSightconfirmation.png)
 ![Noti!](https://github.com/BriLouSal/MarketSIght/blob/main/MarketSightNoti.png)
 ![StockOrderView!](https://github.com/BriLouSal/MarketSIght/blob/main/StockViewsComplete.png)
