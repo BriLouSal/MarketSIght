@@ -17,6 +17,7 @@ We've made the Anthropic API work to its perfection and created many features to
 ![DEMO 7 NEW UPDATE!](https://github.com/BriLouSal/MarketBackApp/blob/main/MarketSightStockTradingdemo.png)
 ![DEMO 8 NEW UPDATE!](https://github.com/BriLouSal/MarketBackApp/blob/main/MarketSightconfirmation.png)
 ![Noti!](https://github.com/BriLouSal/MarketBackApp/blob/main/MarketSightNoti.png)
+![StockOrderView!](https://github.com/BriLouSal/MarketSIght/blob/main/StockViewsComplete.png)
 
 ## Experiment (Testing out via Leveraged ETF):
 GOOGLE (JANUARY 7TH 2026 - JANUARY 16TH 2026)
