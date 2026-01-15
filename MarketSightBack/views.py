@@ -743,7 +743,7 @@ def stock(request, stock_tick:str):
 
     context = {'ticker': ticker, 'information_of_stock': data_stock, 'stock_graph': label_graph, 'stock_price':
                label_price, "exchange": exchange, "longName": stock_name, "date": date, "bullish_indicator": points, "yesterday_price": yesterday_price,     "shares_owned": shares_owned,
-               "avg_cost": avg_cost,}
+               "avg_cost": round(avg_cost, 2),}
 
     return render(request, 'base/stock.html', context)
 
