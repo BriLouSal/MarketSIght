@@ -891,7 +891,7 @@ def portfolio_room(request):
         result_search = Ticker(ticker)
         current_price = result_search.history(period="1d")["close"].iloc[-1]
         
-
+        # We need
         result_of_stock.append({
             'ticker': ticker,
             'price': data_required['chart_price'],
@@ -901,7 +901,7 @@ def portfolio_room(request):
 
         })
     
-
+    
     context = {
         'stock': result_of_stock,
         'json_data_set_stocks': json.dumps(result_of_stock)
