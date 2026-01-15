@@ -322,7 +322,7 @@ form_execution.addEventListener('submit', function(e) {
 document.addEventListener('DOMContentLoaded' , () =>{
 
     const status = sessionStorage.getItem('orderStatus');
-    const messaage = sessionStorage.getItem('orderMessage');
+    const message = sessionStorage.getItem('orderMessage');
     if (status && message) {
         Swal.fire({
             icon: status, // 'success', 'info', 'warning', 'error', 'question'
