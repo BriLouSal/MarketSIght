@@ -58,7 +58,6 @@ console.log(myChart.data.datasets[0].data, "HI");
 
 
 
-setInterval(graph_colour, 10000);
 graph_colour();
 
 // Buttoms
@@ -342,3 +341,45 @@ document.addEventListener('DOMContentLoaded' , () =>{
 
 
 });
+
+const totalReturn = document.getElementById('total-return')
+
+async function grab_current_value(){
+        // #  ROI = [(Current Value / Average Cost) - 1] x 100%
+
+
+// # Current value = Current_price * Shares owned
+// Fetch current price
+    const data = await fetch(`/api/latest-price/${stockTicker}/`)
+
+    const response = await data.json();
+    console.log(response)
+
+    const currentPrice = parseFloat(response.price);
+    // Placeholder for if statement
+    
+    const current_value = (currentPrice * shares) 
+
+    const totalCost = average_cost * shares
+
+    console.log(currentPrice)
+
+    const return_on_investment =  ((current_value / totalCost) - 1) * 100;
+
+    console.log(return_on_investment)
+    const colour = return_on_investment < 0 ? "#FF0000" : "#00FF00";
+
+    totalReturn.innerHTML = `
+         <strong>Total Return:</strong>
+         <span style="color:${colour}">
+         ${return_on_investment.toFixed(2)}%
+         </span>
+    `
+
+
+
+};
+
+setInterval(grab_current_value, 10000);
+
+grab_current_value();

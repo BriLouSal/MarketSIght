@@ -105,6 +105,7 @@
                {% if shares_owned > 0 %}
                <div class="text-white mt-4 p-4   rounded">
                   <p><strong>Shares Owned:</strong> {{ shares_owned }}</p>
+                  <p id="total-return"><strong>Total Return:</strong> {{ shares_owned }}</p>
                   <p><strong>Average Cost:</strong> ${{ avg_cost }}</p>
                </div>
                {% endif %}
@@ -173,8 +174,10 @@
    const chartLabels = {{ stock_graph|safe }};
    const chartPrices = {{ stock_price|safe }};
    const stockTicker = "{{ request.resolver_match.kwargs.stock_tick }}";
-   const points = {{bullish_indicator | safe}}
-   const Chart_yesterday_price = {{yesterday_price | safe}}
+   const points = {{bullish_indicator | safe}};
+   const Chart_yesterday_price = {{yesterday_price | safe}};
+   const shares = {{shares_owned | safe}};
+   const average_cost = {{avg_cost | safe}};
 
    </script>
    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
