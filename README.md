@@ -13,7 +13,7 @@ We've made the Anthropic API work to its perfection and created many features to
 ![DEMO 6 NEW UPDATE!](https://github.com/BriLouSal/MarketBackApp/blob/main/MarketsightLoser.png)
 ![DEMO 8 NEW UPDATE!](https://github.com/BriLouSal/MarketBackApp/blob/main/MarketSightconfirmation.png)
 ![Noti!](https://github.com/BriLouSal/MarketBackApp/blob/main/MarketSightNoti.png)
-![View!](https://github.com/BriLouSal/MarketBackApp/blob/main/StockMarketView.png)
+![View!](https://github.com/BriLouSal/MarketBackApp/blob/main/StockViewsComplete.png)
 
 
 ## Experiment (Testing out via Leveraged ETF):
