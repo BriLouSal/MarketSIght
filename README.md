@@ -17,6 +17,6 @@ We've made the Anthropic API work to its perfection and created many features to
 
 
 ## Experiment (Testing out via Leveraged ETF):
-GOOGLE (JANUARY 7TH 2026 - JANUARY 16TH 2026)
+GOOGLE (JANUARY 7TH 2026 - JANUARY 23rd 2026)
 ![GOOG EXPER](GOOG_EXPER.png)
 
