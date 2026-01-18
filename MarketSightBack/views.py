@@ -899,20 +899,38 @@ def portfolio_room(request):
 
     # So current value / cost
 
-    # I want to grab the value of the stock that portfolio user has.....
-    for ticker in (list_of_user_stock):
+    ticker_list = list(user_stock_position.values_list('ticker', flat=True))
 
-        data_required = json_data_api(date_api='1D', stock=ticker)
+    ticker_api_query = Ticker(ticker_list, asynchronous= True)
+    ticker_htst =  ticker_api_query.history(period='1d', interval='1m')
+    
+   
+
+    # I want to grab the value of the stock that portfolio user has.....
+    for position in (user_stock_position):
+        ticker = position.ticker
+        quantity = float(position.quantity)
+        avg_cost = float(position.book_cost)
+
+     
         
         result_search = Ticker(ticker)
         current_price = result_search.history(period="1d")["close"].iloc[-1]
 
+
+        price = ticker_htst.loc[ticker]['close'].tolist()
+        # We can switch this if we ever want to, I have a future plan :)
+        date_interval = '%H:%M'
+        time_labels = [t.strftime(date_interval) for t in ticker_htst.loc[ticker].index]
+
+
         # We need
         result_of_stock.append({
             'ticker': ticker,
-            'price': data_required['chart_price'],
-            'yesterday_price': data_required['yesterday_price'],
-            'date': data_required['chart_label'],
+            'price': price,
+            'quantity': quantity,
+            'book_cost': avg_cost,
+            'date': time_labels,
             'current_price': current_price,
 
         })
@@ -926,18 +944,7 @@ def portfolio_room(request):
 
     # Now this is where we grab our information from our chart
 
-    chart_price = []
-
-    # Date
-
-    chart_label = []
-
-
-    # Grab
-
-    ticker_position_by_user = [pos.ticker for pos in user_stock_position]
-    
-   
+    # Grab the ticker list and we can do is make another dict and use list comp to manipulate the data in order to get the arrays for data set.
 
 
 

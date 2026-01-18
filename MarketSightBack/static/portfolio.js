@@ -55,37 +55,73 @@ canveses_port.forEach((canvas, index) => {
 });
 
 
+// Reminder, our json is here: portfolioStocks
 
 
-let myChart = new Chart(ctx, {
+const ctx = document.getElementById('portfolioGraph');
+const masterLabels = portfolioStocks[0].date;
+console.log(masterLabels)
+// Now we should make an array for the stocks, manipulate them using foreach and multiply each indexes by the quantity.
+let ValuePortfolio = new Array(masterLabels.length).fill(0);
+
+// Iterate through the stock/ticker price and we should be able to grab their associated quantity and prices
+portfolioStocks.forEach(stock => {
+    const quantity = stock.quantity;
+    const priceHistory = stock.price;
+    // In order to manipulate the stock ticker data and ensure we multiply with its assocaited index, we must iterate through priceHistory
+    priceHistory.forEach((stockPrice, index) => {
+        if (index < ValuePortfolio.length) {
+            ValuePortfolio[index] += parseFloat(stockPrice) * quantity;
+        }
+    });
+});
+
+
+
+
+
+console.log(ValuePortfolio);
+console.log("CTX:", ctx);
+
+
+const mainPortfolioChart = new Chart(ctx, {
     type: 'line',
     data: {
-        labels: chartLabels, // From my Django connected via stock.html
+        labels: masterLabels, // From my Django connected via stock.html
         datasets: [{
-            label: `${stockTicker} Price`,
-            data: chartPrices, 
+            label: 'Portfolio Value',
+            data: ValuePortfolio, 
             borderColor: '#3b82f6',
             fill: true,
             tension: 0.1,
-            backgroundColor: graph_colour(),
+            backgroundColor: 'rgba(59, 130, 246, 0.2)', // Added transparency for area fill
+            pointRadius: 0
         }]
     },
     options: {
-        responsive: true,          
+        responsive: true,           
         maintainAspectRatio: false, 
         scales: {
             x: {
-                ticks : {
+                ticks: {
                     maxTicksLimit: 10,
                     autoSkip: true
-
                 },
                 grid: {
                     display: false
-
+                }
+            },
+            y: {
+                beginAtZero: false, // Ensures the chart zooms in on price movement
+                ticks: {
+                    callback: function(value) {
+                        return '$' + value.toLocaleString();
+                    }
                 }
             }
-
         },
+        plugins: {
+            legend: { display: false }
+        }
     }
 });
