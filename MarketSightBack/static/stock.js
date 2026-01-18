@@ -100,7 +100,7 @@ gsap.from(ctx, {
     ease: 'power3.out',
 })
 
-setInterval(StockUpdate, 10000);
+setInterval(StockUpdate, 3000);
 StockUpdate();
 
 
@@ -322,6 +322,16 @@ document.addEventListener('DOMContentLoaded' , () =>{
 
     const status = sessionStorage.getItem('orderStatus');
     const message = sessionStorage.getItem('orderMessage');
+        //  We don't need to fetch the data for the current price everytime. Therefore we don't need to have it as async function because of this situation.
+
+    const data_stock = fetch(`/api/latest-price/${stockTicker}/`);
+    const response = data_stock.json();
+    
+    current_price = parseFloat(response);
+    
+    const current_value = (currentPrice * amount);
+    // If the curre
+
     if (status && message) {
         Swal.fire({
             icon: status, // 'success', 'info', 'warning', 'error', 'question'
@@ -337,7 +347,8 @@ document.addEventListener('DOMContentLoaded' , () =>{
         sessionStorage.removeItem('orderStatus');
         sessionStorage.removeItem('orderMessage');
     }
-
+    
+    //  We don't need to fetch the data for the current price everytime. Therefore we don't need to have it as async function because
 
 
 });
@@ -353,7 +364,6 @@ async function grab_current_value(){
     const data = await fetch(`/api/latest-price/${stockTicker}/`)
 
     const response = await data.json();
-    console.log(response)
 
     const currentPrice = parseFloat(response.price);
     // Placeholder for if statement

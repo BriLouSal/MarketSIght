@@ -96,7 +96,10 @@ load_dotenv()
 
 
 
-
+# Convert bullish score into async await system, so we can keep grabbing the information from the bullish score every 25 seconds
+async def bullish_score(request, stock):
+    grab_bullish_indicator = await(bullish_indicator(stock=stock))
+    return grab_bullish_indicator
 
 
 #  This is the views.py file where we will handle the logic for our application
@@ -701,12 +704,20 @@ def stock(request, stock_tick:str):
         position = StockPosition.objects.filter(
         user_portfolio__owner__username=request.user.username,
         ticker=stock_url
+        
         ).first()
+        user, _ = Profile.objects.get_or_create(
+        username=request.user.username,
+        defaults={"email": request.user.email}
+        )
+
+        
+        user_capital = user.money_owned
+
         if position:
             shares_owned = position.quantity
             avg_cost = position.book_cost
     
-
 
 
 
@@ -743,7 +754,7 @@ def stock(request, stock_tick:str):
 
     context = {'ticker': ticker, 'information_of_stock': data_stock, 'stock_graph': label_graph, 'stock_price':
                label_price, "exchange": exchange, "longName": stock_name, "date": date, "bullish_indicator": points, "yesterday_price": yesterday_price,     "shares_owned": shares_owned,
-               "avg_cost": avg_cost}
+               "avg_cost": avg_cost, 'capital': user_capital,}
 
     return render(request, 'base/stock.html', context)
 
@@ -887,13 +898,15 @@ def portfolio_room(request):
 
 
     # So current value / cost
+
+    # I want to grab the value of the stock that portfolio user has.....
     for ticker in (list_of_user_stock):
 
         data_required = json_data_api(date_api='1D', stock=ticker)
         
         result_search = Ticker(ticker)
         current_price = result_search.history(period="1d")["close"].iloc[-1]
-        
+
         # We need
         result_of_stock.append({
             'ticker': ticker,
@@ -903,6 +916,32 @@ def portfolio_room(request):
             'current_price': current_price,
 
         })
+
+
+    # We want to also grab the total value of the stock, iterate through user position, and we'd want to compare this in javascript, so I can create better UI for the graph.
+    # Grab quantity:   # Grab the ticker price
+
+    # Value of the stock; grab_price * user.quamtity
+
+
+    # Now this is where we grab our information from our chart
+
+    chart_price = []
+
+    # Date
+
+    chart_label = []
+
+
+    # Grab
+
+    ticker_position_by_user = [pos.ticker for pos in user_stock_position]
+    
+   
+
+
+
+    
     
     
     context = {

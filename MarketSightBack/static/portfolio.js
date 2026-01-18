@@ -57,3 +57,35 @@ canveses_port.forEach((canvas, index) => {
 
 
 
+let myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: chartLabels, // From my Django connected via stock.html
+        datasets: [{
+            label: `${stockTicker} Price`,
+            data: chartPrices, 
+            borderColor: '#3b82f6',
+            fill: true,
+            tension: 0.1,
+            backgroundColor: graph_colour(),
+        }]
+    },
+    options: {
+        responsive: true,          
+        maintainAspectRatio: false, 
+        scales: {
+            x: {
+                ticks : {
+                    maxTicksLimit: 10,
+                    autoSkip: true
+
+                },
+                grid: {
+                    display: false
+
+                }
+            }
+
+        },
+    }
+});
