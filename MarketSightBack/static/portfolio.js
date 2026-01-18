@@ -87,14 +87,14 @@ console.log("CTX:", ctx);
 const mainPortfolioChart = new Chart(ctx, {
     type: 'line',
     data: {
-        labels: masterLabels, // From my Django connected via stock.html
+        labels: masterLabels, 
         datasets: [{
             label: 'Portfolio Value',
             data: ValuePortfolio, 
             borderColor: '#3b82f6',
             fill: true,
             tension: 0.1,
-            backgroundColor: 'rgba(59, 130, 246, 0.2)', // Added transparency for area fill
+            backgroundColor: 'rgba(59, 130, 246, 0.2)',
             pointRadius: 0
         }]
     },
@@ -112,7 +112,7 @@ const mainPortfolioChart = new Chart(ctx, {
                 }
             },
             y: {
-                beginAtZero: false, // Ensures the chart zooms in on price movement
+                beginAtZero: false, 
                 ticks: {
                     callback: function(value) {
                         return '$' + value.toLocaleString();
