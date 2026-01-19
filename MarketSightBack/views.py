@@ -870,7 +870,7 @@ def assistance(request):
 
 
 
-def portfolio_room(request):
+def portfolio_room(request, date='1D', interval='1m'):
     # We will fetch user's stock portfolio from database and display it here, so our context would have ticker, and create average return. 
 
     # Important Formula: \(\text{ROI}=\left(\frac{\text{Final\ Value\ of\ Investment}-\text{Total\ Cost\ of\ Investment}}{\text{Total\ Cost\ of\ Investment}}\right)\times 100\%\)
@@ -897,11 +897,35 @@ def portfolio_room(request):
 
     # So current value / cost
 
+
+    
+
+    
+    if date == '1D':
+        period = '1d'
+        interval = '1m'
+        interval_format = '%a %H:00'
+        
+    elif date == '1W':
+        period = '1wk'
+        interval = '15m'
+        interval_format = '%a %H:%M'
+    elif date == '1M':
+        period = '1mo'
+        interval = '1h'
+        interval_format = '%b %d'
+        
+    # Do years
+    elif  date == '1Y':
+       period = '1y'
+       interval = '1wk'
+  
+       interval_format = '%Y-%b'
+
     ticker_list = list(user_stock_position.values_list('ticker', flat=True))
 
     ticker_api_query = Ticker(ticker_list, asynchronous= True)
-    ticker_htst =  ticker_api_query.history(period='1d', interval='1m')
-    
+    ticker_htst =  ticker_api_query.history(period=period, interval=interval)
    
 
     # I want to grab the value of the stock that portfolio user has.....
@@ -914,13 +938,13 @@ def portfolio_room(request):
      
         
         result_search = Ticker(ticker)
-        current_price = result_search.history(period="1d")["close"].iloc[-1]
+        current_price = result_search.history(period=period)["close"].iloc[-1]
 
 
         price = ticker_htst.loc[ticker]['close'].tolist()
         # We can switch this if we ever want to, I have a future plan :)
         date_interval = '%H:%M'
-        time_labels = [t.strftime(date_interval) for t in ticker_htst.loc[ticker].index]
+        time_labels = [t.strftime(interval_format) for t in ticker_htst.loc[ticker].index]
 
 
         # We need

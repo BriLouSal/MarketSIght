@@ -127,4 +127,56 @@ const mainPortfolioChart = new Chart(ctx, {
 });
 
 
-// We grab tghe 
+// We grab the buttons: We can use our stock.js and apply it accordingly!
+
+
+const buttons = document.querySelectorAll('.interval')
+
+function buttonUpdate() {
+    buttons.forEach(btn => {
+        btn.addEventListener('click', async function() {
+            buttons.forEach(b => {
+                b.classList.remove('text-white'); 
+                b.classList.add('text-gray-950');
+            });
+
+            this.classList.remove('text-gray-950');
+            this.classList.add('text-white');
+
+            const interval = this.getAttribute('data-interval');
+
+            let period;
+            if (interval === '1D') { period = '1d'; step}
+            else if (interval === '1W') { period = '5d'; }
+            else if (interval === '1M') { period = '1mo';  }
+            else if (interval === '1Y') { period = '1y';}
+            // console.log("Fetching data for:", interval);
+        const response = portfolioStocks.map(stock => 
+                    fetch(`/api/json_data_api/${stock.ticker}/${period}/`).then(res => res.json())
+                );
+
+        const data = await Promise.all(response);
+
+        const newLabels = data[0].labels;
+    
+        let newPortfolioValues = new Array(newLabels.length).fill(0);
+        
+        data.forEach((stock, stockIndex) => {
+            const qty = portfolioStocks[stockIndex].quantity;
+            stock.price.forEach((prices, i) => {
+                if (i < newPortfolioValues.length) {
+                    newPortfolioValues[i] += parseFloat(prices) * qty;
+                }
+
+            })
+        });
+        mainPortfolioChart.data.labels = newLabels;
+        mainPortfolioChart.data.datasets[0].data = newPortfolioValues;
+        mainPortfolioChart.update();
+
+
+
+        });
+    });
+}
+buttonUpdate();

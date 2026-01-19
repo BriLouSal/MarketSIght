@@ -15,6 +15,7 @@ import yfinance as yf
 urlpatterns = [
     path('', views.search, name='search'),
     path('room/',  views.portfolio_room, name='room'),
+    path('room/<str:date>/<str:interval>/',  views.portfolio_room, name='room'),
     path('stock/<str:stock_tick>/', views.stock, name='stock'),
     # path("api/stock/<str:stock_tick>/", views.json_api, name="stock_json"), Not sure about this one, I will add this if I need to create an API gateway for graph
     path('login/', views.loginpage, name='login'),
