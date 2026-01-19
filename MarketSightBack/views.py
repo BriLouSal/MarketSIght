@@ -96,11 +96,6 @@ load_dotenv()
 
 
 
-# Convert bullish score into async await system, so we can keep grabbing the information from the bullish score every 25 seconds
-async def bullish_score(request, stock):
-    grab_bullish_indicator = await(bullish_indicator(stock=stock))
-    return grab_bullish_indicator
-
 
 #  This is the views.py file where we will handle the logic for our application
 #  We will create views for home, portfolio room, stock, login, signup, and assistance
@@ -828,8 +823,7 @@ def logout_page(request):
     
     logout(request)
     
-    return render(request, 'base/authentication/logout.html')
-
+    return redirect('search')
 
 
 
@@ -876,7 +870,6 @@ def assistance(request):
 
 
 
-@login_required
 def portfolio_room(request):
     # We will fetch user's stock portfolio from database and display it here, so our context would have ticker, and create average return. 
 
@@ -885,6 +878,11 @@ def portfolio_room(request):
     #  Create a sidebar with graphs, ticker name, etc,.and we grab those information from StockPosition
 
     # First grab stockPositon
+
+    # check if user is authenticated:
+    if not request.user.is_authenticated:
+        redirect ('search')
+
 
     user_stock_position = StockPosition.objects.filter(
     user_portfolio__owner__username=request.user.username
@@ -911,6 +909,7 @@ def portfolio_room(request):
         ticker = position.ticker
         quantity = float(position.quantity)
         avg_cost = float(position.book_cost)
+        
 
      
         

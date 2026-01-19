@@ -125,3 +125,6 @@ const mainPortfolioChart = new Chart(ctx, {
         }
     }
 });
+
+
+// We grab tghe 
