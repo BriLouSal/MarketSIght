@@ -945,22 +945,12 @@ def portfolio_room(request):
 
     # Grab the ticker list and we can do is make another dict and use list comp to manipulate the data in order to get the arrays for data set.
 
-
-
-    
     
     
     context = {
         'stock': result_of_stock,
         'json_data_set_stocks': json.dumps(result_of_stock)
     }
-
-
-
-
-    
-
-
 
     return render(request, 'base/portfolio_room.html', context)
 
