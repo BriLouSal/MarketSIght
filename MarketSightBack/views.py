@@ -870,7 +870,7 @@ def assistance(request):
 
 
 
-def portfolio_room(request, date='1D', interval='1m'):
+def portfolio_room(request, date='1D'):
     # We will fetch user's stock portfolio from database and display it here, so our context would have ticker, and create average return. 
 
     # Important Formula: \(\text{ROI}=\left(\frac{\text{Final\ Value\ of\ Investment}-\text{Total\ Cost\ of\ Investment}}{\text{Total\ Cost\ of\ Investment}}\right)\times 100\%\)

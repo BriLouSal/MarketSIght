@@ -143,33 +143,28 @@ function buttonUpdate() {
             this.classList.remove('text-gray-950');
             this.classList.add('text-white');
 
-            const interval = this.getAttribute('data-interval');
-
-            let period;
-            if (interval === '1D') { period = '1d'; step}
-            else if (interval === '1W') { period = '5d'; }
-            else if (interval === '1M') { period = '1mo';  }
-            else if (interval === '1Y') { period = '1y';}
+        const interval = this.getAttribute('data-interval');
             // console.log("Fetching data for:", interval);
         const response = portfolioStocks.map(stock => 
-                    fetch(`/api/json_data_api/${stock.ticker}/${period}/`).then(res => res.json())
+                    fetch(`/api/json_data_api/${stock.ticker}/${interval}/`).then(res => res.json())
                 );
+
 
         const data = await Promise.all(response);
 
         const newLabels = data[0].labels;
-    
         let newPortfolioValues = new Array(newLabels.length).fill(0);
         
         data.forEach((stock, stockIndex) => {
             const qty = portfolioStocks[stockIndex].quantity;
-            stock.price.forEach((prices, i) => {
+            const priceHistory = stock.prices;
+            priceHistory.forEach((price, i) => {
                 if (i < newPortfolioValues.length) {
-                    newPortfolioValues[i] += parseFloat(prices) * qty;
+                    newPortfolioValues[i] += parseFloat(price) * qty;
                 }
-
-            })
+            });
         });
+        console.log('Newlabels:', newLabels);
         mainPortfolioChart.data.labels = newLabels;
         mainPortfolioChart.data.datasets[0].data = newPortfolioValues;
         mainPortfolioChart.update();
