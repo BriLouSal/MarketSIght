@@ -357,8 +357,17 @@ def json_data_api(date_api:str, stock: str) -> dict:
     exchange =  summary.get("exchangeName")
     date = summary.get("regularMarketTime")
 
-    market_state = summary.get('marketState')
+    # Important resources: https://ranaroussi.github.io/yfinance/
     
+    market_state = summary.get('marketState')
+
+    # We want to make the value of afterhours none for now.
+    # We'll also need this for my bullish indicator because I have one data that could change the bullish indicator itself
+
+    # Formula needed: After Hours Return  = ((RostMarket - RegClose) / regClose)* 100
+    after_hours = None
+    
+
 
 
     if date_api == '1D':
@@ -631,8 +640,8 @@ def search(request):
             stock_checked = check_stock(stock=search_stock)
 
             if stock_checked is None:
-                messages.error("Please Try Again, This Stock Does not Exist")
-                return render(request, 'base/search.html')
+                messages.error(request, "Please Try Again, This Stock Does not Exist")
+                return redirect('search')
 
     
             # This will give the stock the i = stock_checked. Since it's existing right?
