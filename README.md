@@ -16,7 +16,7 @@ We've made the Anthropic API work to its perfection and created many features to
 ![View!](StockViewsComplete.png)
 
 
-## Experiment (Testing out via Leveraged ETF): (JANUARY 7TH 2026 - Feburary 7th 2026) (Buying Short Position for short-term on META, and VIX long)
+## Experiment (Testing out via Leveraged ETF): (JANUARY 7TH 2026 - Feburary 7th 2026) (Buying Short Position for short-term on META BEAR , and VIX long)
 ![GOOG EXPER](GOOG_EXPER.png)
 # TESTING GLOBAL CRISIS INDICATOR (I AM HOLDING SHORT TERM SHORT POSITIONS)
 ![GOOG EXPER 1](GOOG.png)
