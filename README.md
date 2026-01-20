@@ -21,4 +21,4 @@ We've made the Anthropic API work to its perfection and created many features to
 # TESTING GLOBAL CRISIS INDICATOR (I AM HOLDING SHORT TERM SHORT POSITIONS)
 ![GOOG EXPER 1](GOOG.png)
 ![META EXPER](metaexper.png)
-
+# SOLD: VIX 2x LONG at 6.35% return
