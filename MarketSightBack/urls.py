@@ -27,7 +27,7 @@ urlpatterns = [
     path("api/latest-price/<str:stock>/", views.latest_price, name="latest_price"),
     path("api/autocomplete/<str:letters>/", views.information_letter, name="information_letter"),
     # SO we can directly interact with views.py and work with our database from the models
-    path("trade/<str:order_type>/", views.stockOrder, name="stockOrder"),
+    path("trade/<str:ticker>/<str:order_type>/", views.stockOrder, name="stockOrder"),
     
 
 
