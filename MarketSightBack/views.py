@@ -34,7 +34,7 @@ from alpaca.trading.client import TradingClient
 from alpaca.trading.requests import GetAssetsRequest
 from alpaca.trading.enums import AssetClass, AssetStatus
 
-from datetime import datetime
+from datetime import datetime, timedelta
 from yahooquery import Ticker, search
 
 
@@ -985,4 +985,41 @@ def portfolio_room(request, date='1D'):
     }
 
     return render(request, 'base/portfolio_room.html', context)
+
+def capital_asset_pricing_models(ticker: str):
+    stock = Ticker(symbols=ticker)
+    # Grab the beta of the stock
+    beta = stock.key_stats[ticker].get('beta', 1.0)
+
+    treasury_ticker = Ticker("^TNX")
+    # Grab risk_free_rate via treasury bonds, and also grab the beta of the stock.
+    risk_free_rate = treasury_ticker.summary_detail['^TNX']['yield'] / 100
+
+    # Grab expected market returns using SP500, and get its information
+    index = Ticker('^GSPC')
+    
+    YEARS_SP500 = 10
+    end_date = datetime.now()
+    date_of_sp500 = end_date - timedelta(days=YEARS_SP500*365)
+    
+    # Use CAGR of SP500 to get the expected market return
+    # Formula: (Ending Value / Beginning Value)^(1 / Number of Years) - 1
+
+    # Get the sp500 value at beginning of the interval and ending via indexation
+
+    history_of_index = index.history(start=date_of_sp500, end=end_date)
+
+
+    ending_value = history_of_index['adjclose'].iloc[-1]
+    start_value = history_of_index['adjclose'].iloc[0]
+
+
+    market_return = ((ending_value / start_value) ** (1/ YEARS_SP500)) - 1
+
+    # CAPM FORMULA: : Expected Return = Risk-Free Rate + Beta × (Expected Market Return - Risk-Free Rate
+
+    return (risk_free_rate + beta * (market_return -  risk_free_rate))
+
+    
+
 
