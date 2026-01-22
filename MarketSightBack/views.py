@@ -115,7 +115,7 @@ def capital_asset_pricing_models(ticker: str):
 
     treasury_ticker = Ticker("^TNX")
     # Grab risk_free_rate via treasury bonds, and also grab the beta of the stock.
-    risk_free_rate = treasury_ticker.summary_detail['^TNX']['yield'] / 100
+    risk_free_rate = (treasury_ticker.history(period='1d')['close'].iloc[-1]) / 100
 
     # Grab expected market returns using SP500, and get its information
     index = Ticker('^GSPC')
@@ -140,7 +140,7 @@ def capital_asset_pricing_models(ticker: str):
 
     # CAPM FORMULA: : Expected Return = Risk-Free Rate + Beta × (Expected Market Return - Risk-Free Rate
 
-    return (risk_free_rate + beta * (market_return -  risk_free_rate))
+    return round((risk_free_rate + beta * (market_return -  risk_free_rate) * 100), 2)
 
 
 def dailyWinners():
@@ -790,9 +790,11 @@ def stock(request, stock_tick:str):
     # NEEDED for bullish chart.js
     points = bullish_indicator(stock=stock_url)
 
+    capm_score_of_stock = capital_asset_pricing_models(ticker=stock_url)
+
     context = {'ticker': ticker, 'information_of_stock': data_stock, 'stock_graph': label_graph, 'stock_price':
                label_price, "exchange": exchange, "longName": stock_name, "date": date, "bullish_indicator": points, "yesterday_price": yesterday_price,     "shares_owned": shares_owned,
-               "avg_cost": avg_cost, 'capital': user_capital,}
+               "avg_cost": avg_cost, 'capital': user_capital, 'capm_score_of_stock': capm_score_of_stock, }
 
     return render(request, 'base/stock.html', context)
 

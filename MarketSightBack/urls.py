@@ -26,6 +26,8 @@ urlpatterns = [
     path("api/json_data_api/<str:stock>/<str:interval>/", views.json_data_view, name="json_data_view"),
     path("api/latest-price/<str:stock>/", views.latest_price, name="latest_price"),
     path("api/autocomplete/<str:letters>/", views.information_letter, name="information_letter"),
+    path("api/capm/<str:tickers>/", views.capital_asset_pricing_models, name="capital_asset_pricing_models"),
+    
     # SO we can directly interact with views.py and work with our database from the models
     path("trade/<str:ticker>/<str:order_type>/", views.stockOrder, name="stockOrder"),
     

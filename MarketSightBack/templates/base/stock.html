@@ -59,17 +59,21 @@
             <canvas id="stockGraph"></canvas>
          </div>
 
-
+         
          <div class="bullish_circle flex items-center justify-center h-[500px] w-1/3 border-2 border-cyan-300 shadow-[0_0_15px_rgba(34,211,238,0.8),inset_0_0_15px_rgba(34,211,238,0.5)]">
          <canvas id="bullishIndicator" class="w-full h-full"></canvas>
 
          </div>
 
+         <div class="capm_cicle flex items-center justify-center h-[500px] w-1/3 border-2 border-cyan-300 shadow-[0_0_15px_rgba(34,211,238,0.8),inset_0_0_15px_rgba(34,211,238,0.5)]">
+         <canvas id="capmGraph" class="w-full h-full"></canvas>
+
+         </div>
 
       </div>
 
       <div>
-         <button class="interval  hover:bg-blue-300 hover:text-white"
+         <button class="interval bg-blue-500 hover:bg-blue-300 hover:text-white"
                  data-interval="1D">1D</button>
 
          <button class="interval  text-gray-950 hover:bg-blue-300 hover:text-white"
@@ -86,7 +90,7 @@
       <!-- Stock order -->
       {% if user.is_authenticated %}
        <!-- Wrapper, create a glowing broder -->
-       <div class="flex border-cyan-300 shadow-[0_0_15px_rgba(34,211,238,0.8),inset_0_0_15px_rgba(34,211,238,0.5)] w-full max-w-[400px] items-center justify-center gap-4">
+       <div class="flex border-cyan-300 shadow-[0_0_15px_rgba(34,211,238,0.8),inset_0_0_15px_rgba(34,211,238,0.5)] w-full max-w-[400px] items-center justify-center gap-4 mt-4">
 
          <form method="POST" class="w-full" id="form_execute" action="/trade/{{ request.resolver_match.kwargs.stock_tick }}/BUY/"  class="w-full max-w-[420px] flex flex-col items-center text-center gap-4">
             {% csrf_token %}
@@ -179,6 +183,7 @@
    const shares = {{shares_owned | safe}};
    const average_cost = {{avg_cost | safe}};
    const user_capital = {{capital | safe}};
+   const scoreOfCapm = {{capm_score_of_stock | safe}};
    </script>
    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.1/dist/gsap.min.js"></script>

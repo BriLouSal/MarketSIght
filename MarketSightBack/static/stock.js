@@ -67,11 +67,11 @@ function buttonUpdate() {
     buttons.forEach(btn => {
         btn.addEventListener('click', async function() {
             buttons.forEach(b => {
-                b.classList.remove('text-white'); 
+                b.classList.remove('bg-blue-500', 'text-white'); 
                 b.classList.add('text-gray-950');
             });
 
-            this.classList.remove('text-gray-950');
+            this.classList.remove( 'text-gray-950');
             this.classList.add('bg-blue-500', 'text-white');
 
             const interval = this.getAttribute('data-interval');
@@ -199,32 +199,7 @@ const centerText = {
 
 
 
-const centerTextCAPM = {
-  id: 'centerText',
-  afterDraw(chart) {
-    const { ctx, chartArea: { width, height } } = chart;
-    ctx.save();
 
-
-    ctx.font = 'bold 12px sans-serif';
-    ctx.fillStyle = '#ffffff';
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText('Bullish Indicator', width / 2, height / 2 - 30);
-
-
-    //  Muddle
-    ctx.font = 'bold 26px sans-serif';
-    ctx.fillStyle = '#ffffff';
-    ctx.fillText(`${score}%`, width / 2, height / 2) ;
-
-    // Subtitle 
-    ctx.font = ' 14px sans-serif';
-    ctx.fillStyle = '#ffffff';
-    ctx.fillText(`Bullish Score`, width / 2, height / 2 + 28) ;
-    ctx.restore();
-  }
-};
 // Grab the chart for bullish indicator
 const ctx_chart = document.getElementById("bullishIndicator")
 
@@ -240,18 +215,6 @@ const chart = new Chart(ctx_chart, {
     },
 });
 
-// I am creating a CAPM data for visualization
-// const CAPM = new Chart(ctx_chart, {
-//     type: "doughnut",
-//     plugins: [centerText],
-//     data: {                                  
-//         datasets: [{
-//             data: [0.001, 99.999],
-//             backgroundColor: [pieGraphColor(score), "#eeeeee"],
-//             borderWidth: 0
-//         }]
-//     },
-// });
 
 let animation_score = {v: 0}
 
@@ -434,3 +397,53 @@ async function grab_current_value(){
 setInterval(grab_current_value, 10000);
 
 grab_current_value();
+
+
+
+// I am creating a CAPM data for visualization
+
+const capm_chart = document.getElementById('capmGraph');
+
+
+const centerTextCAPM = {
+  id: 'centerText',
+  afterDraw(chart) {
+    const { ctx, chartArea: { width, height } } = chart;
+    ctx.save();
+
+
+    ctx.font = 'bold 12px sans-serif';
+    ctx.fillStyle = '#ffffff';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('Bullish Indicator', width / 2, height / 2 - 30);
+
+
+    //  Muddle
+    ctx.font = 'bold 26px sans-serif';
+    ctx.fillStyle = '#ffffff';
+    ctx.fillText(`${scoreOfCapm}%`, width / 2, height / 2) ;
+
+    // Subtitle 
+    ctx.font = ' 14px sans-serif';
+    ctx.fillStyle = '#ffffff';
+    ctx.fillText(`Risk Score`, width / 2, height / 2 + 28) ;
+    ctx.restore();
+  }
+};
+
+
+
+
+
+const capm = new Chart(capm_chart, {
+    type: "doughnut",
+    plugins: [centerTextCAPM],
+    data: {                                  
+        datasets: [{
+            data: [0.001, 99.999],
+            backgroundColor: [pieGraphColor(scoreOfCapm), "#eeeeee"],
+            borderWidth: 0
+        }]
+    },
+});
