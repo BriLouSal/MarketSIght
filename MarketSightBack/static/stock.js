@@ -157,7 +157,6 @@ gsap.from(cards, {
 
 
 // Create a function to grab the colors of the bullish indicator
-// Create a function to grab the colors of the bullish indicator
 const score = points
 
 function pieGraphColor(score) {
@@ -405,6 +404,9 @@ grab_current_value();
 const capm_chart = document.getElementById('capmGraph');
 
 
+
+
+
 const centerTextCAPM = {
   id: 'centerText',
   afterDraw(chart) {
@@ -441,9 +443,12 @@ const capm = new Chart(capm_chart, {
     plugins: [centerTextCAPM],
     data: {                                  
         datasets: [{
-            data: [0.001, 99.999],
+            data: [scoreOfCapm, 100 - scoreOfCapm],
             backgroundColor: [pieGraphColor(scoreOfCapm), "#eeeeee"],
             borderWidth: 0
         }]
     },
 });
+
+
+
