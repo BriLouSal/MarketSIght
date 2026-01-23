@@ -418,7 +418,7 @@ const centerTextCAPM = {
     ctx.fillStyle = '#ffffff';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.fillText('Bullish Indicator', width / 2, height / 2 - 30);
+    ctx.fillText('Risk Indicator', width / 2, height / 2 - 30);
 
 
     //  Muddle
@@ -435,8 +435,16 @@ const centerTextCAPM = {
 };
 
 
+// Reverse the logic, and change the colour of the pie graph, because ofc, lower risk the safter the investment is :)
+function pieGraphColortwo(score) {
+  if (score < 20) return '#2e7d32';
+  if (score < 40) return '#7cb342'; 
+  if (score < 60) return '#fbc02d';
+  if (score < 80) return '#f57c00';
+  return '#d32f2f';                 
+}
 
-
+// Copy the same logic from the other doughnut chart
 
 const capm = new Chart(capm_chart, {
     type: "doughnut",
@@ -444,7 +452,7 @@ const capm = new Chart(capm_chart, {
     data: {                                  
         datasets: [{
             data: [scoreOfCapm, 100 - scoreOfCapm],
-            backgroundColor: [pieGraphColor(scoreOfCapm), "#eeeeee"],
+            backgroundColor: [pieGraphColortwo(scoreOfCapm), "#222831"],
             borderWidth: 0
         }]
     },

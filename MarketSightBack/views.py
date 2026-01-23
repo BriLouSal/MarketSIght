@@ -973,16 +973,25 @@ def portfolio_room(request, date='1D'):
    
 
     # I want to grab the value of the stock that portfolio user has.....
+
+    # We also want to grab the user's total value, so therefore keep a value that keeps track with all of them
+
+    sum_of_user_portfolio = 0
     for position in (user_stock_position):
         ticker = position.ticker
+
         quantity = float(position.quantity)
         avg_cost = float(position.book_cost)
+
         
 
      
         
         result_search = Ticker(ticker)
         current_price = result_search.history(period=period)["close"].iloc[-1]
+        # sum += price * quantity
+        
+        sum_of_user_portfolio += current_price * quantity
 
 
         price = ticker_htst.loc[ticker]['close'].tolist()
@@ -1003,6 +1012,9 @@ def portfolio_room(request, date='1D'):
         })
 
 
+    
+
+
     # We want to also grab the total value of the stock, iterate through user position, and we'd want to compare this in javascript, so I can create better UI for the graph.
     # Grab quantity:   # Grab the ticker price
 
@@ -1017,7 +1029,8 @@ def portfolio_room(request, date='1D'):
     
     context = {
         'stock': result_of_stock,
-        'json_data_set_stocks': json.dumps(result_of_stock)
+        'json_data_set_stocks': json.dumps(result_of_stock),
+        'portfolio_val': sum_of_user_portfolio,
     }
 
     return render(request, 'base/portfolio_room.html', context)
