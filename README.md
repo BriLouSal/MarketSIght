@@ -5,7 +5,7 @@ MarketSight is a Python-powered analytics platform that backtests trading strate
 
 
 # Backend: 
-* We've used Django for this project, as I personally started this project initially just to learn Django, and I've gotten interested about API, and I figured that it's easy to use url routing in order to connect my views.py towards JS and visualize information seamlessly, and I found it pretty decent. Django also has a built in caching tool, which I used to potentially handle millions of user and used cache timeoue for performance optimization, and we're likely to see much  more accurate data, which I wish to provide as investing is a high-risk high-reward endeavour, and I sincerely believe that information can empower investors over reckless decisions.
+* We've used Django for this project, as I personally started this project initially just to learn Django, and I've gotten interested about API, and I figured that it's easy to use url routing in order to connect my views.py towards JS and visualize information seamlessly, and I found it pretty decent. Django also has a built in caching tool, which I used to potentially handle millions of user and used cache timeoue for performance optimization, and we're likely to see much  more accurate data, which I wish to provide as investing is a high-risk high-reward endeavour, and I sincerely believe that information can empower investors over reckless decisions. 
 
 
 # Data Used:
@@ -13,7 +13,8 @@ MarketSight is a Python-powered analytics platform that backtests trading strate
 
 
 
-
+# Tradeback:
+* Our Django-powered analyitics is not meant for day-trading, as it's meant usually for mid-term, or long-term investment due to its slow response time (which relies entirely on how many users will be using my product, as I've used a caching as my state management for the crucial part of my code that requires multiple API requests). Day-trading support would require me to implement web sockets
 ## Demo:
 
 ![DEMO 6 NEW UPDATE!](MarketsightLoser.png)
