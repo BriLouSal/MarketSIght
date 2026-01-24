@@ -179,11 +179,12 @@
    const chartPrices = {{ stock_price|safe }};
    const stockTicker = "{{ request.resolver_match.kwargs.stock_tick }}";
    const points = {{bullish_indicator | safe}};
+   const scoreOfCapm = {{capm_score_of_stock | safe}};
    const Chart_yesterday_price = {{yesterday_price | safe}};
    const shares = {{shares_owned | safe}};
    const average_cost = {{avg_cost | safe}};
    const user_capital = {{capital | safe}};
-   const scoreOfCapm = {{capm_score_of_stock | safe}};
+
    </script>
    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.1/dist/gsap.min.js"></script>

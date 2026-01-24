@@ -401,6 +401,7 @@ grab_current_value();
 
 // I am creating a CAPM data for visualization
 
+
 const capm_chart = document.getElementById('capmGraph');
 
 
@@ -457,6 +458,3 @@ const capm = new Chart(capm_chart, {
         }]
     },
 });
-
-
-

@@ -111,10 +111,12 @@ recent_search = {}
 def capital_asset_pricing_models(ticker: str):
     stock = Ticker(symbols=ticker)
     # Grab the beta of the stock
-    beta = stock.key_stats[ticker].get('beta', 1.0)
+    key_stats = stock.key_stats.get(ticker, {}) or {}
+    beta = key_stats.get('beta', 1.0)
 
     treasury_ticker = Ticker("^TNX")
     # Grab risk_free_rate via treasury bonds, and also grab the beta of the stock.
+    
     risk_free_rate = (treasury_ticker.history(period='1d')['close'].iloc[-1]) / 100
 
     # Grab expected market returns using SP500, and get its information
@@ -123,6 +125,7 @@ def capital_asset_pricing_models(ticker: str):
     YEARS_SP500 = 10
     end_date = datetime.now()
     date_of_sp500 = end_date - timedelta(days=YEARS_SP500*365)
+
     
     # Use CAGR of SP500 to get the expected market return
     # Formula: (Ending Value / Beginning Value)^(1 / Number of Years) - 1
