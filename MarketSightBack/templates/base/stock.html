@@ -107,13 +107,14 @@
                   Buy some {{request.resolver_match.kwargs.stock_tick}}
                </p>
                <div class="text-white mt-4 p-4   rounded">
+
+
                   {% if shares_owned > 0 %}
                   <p><strong>Shares Owned:</strong> {{ shares_owned }}</p>
                   <p id="total-return"><strong>Total Return:</strong> {{ shares_owned }}</p>
                   <p><strong>Average Cost:</strong> ${{ avg_cost }}</p>
                   {% endif %}
 
-                  <p id="total-cost"><strong>Total Cost:</strong> $0.00</p>
 
                </div>
 

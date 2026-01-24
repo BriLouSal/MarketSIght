@@ -246,6 +246,7 @@ const text_changer = document.getElementById('text-changer');
 const input_changer = document.getElementById('input-changer');
 const button_execute_order = document.getElementById('button-execute');
 const form_execution = document.getElementById('form_execute');
+const strong_changer_total = document.getElementById('strong-changer-total');
 
 
 
@@ -262,6 +263,7 @@ buy_button.addEventListener('click', (e) => {
     // const order =  fetch(`trade/<str:ticker>/<str:order_type>/`)
 
     form_execution.action = `/trade/${stockTicker}/BUY/`;
+    strong_changer_total.innerHTML = 'Total Cost: '
 
 
 })
@@ -277,6 +279,8 @@ sell_button.addEventListener('click', (e) => {
     buy_button.classList.replace('bg-blue-400', 'bg-blue-700');
     button_execute_order.innerHTML = `SELL`;
     form_execution.action = `/trade/${stockTicker}/SELL/`;
+    strong_changer_total.innerHTML = 'Total Value: '
+
 
 
 })
