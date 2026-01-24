@@ -106,13 +106,17 @@
                <p class="text-white text-center text-[24px] font-bold" id="text-changer">
                   Buy some {{request.resolver_match.kwargs.stock_tick}}
                </p>
-               {% if shares_owned > 0 %}
                <div class="text-white mt-4 p-4   rounded">
+                  {% if shares_owned > 0 %}
                   <p><strong>Shares Owned:</strong> {{ shares_owned }}</p>
                   <p id="total-return"><strong>Total Return:</strong> {{ shares_owned }}</p>
                   <p><strong>Average Cost:</strong> ${{ avg_cost }}</p>
+                  {% endif %}
+
+                  <p id="total-cost"><strong>Total Cost:</strong> $0.00</p>
+
                </div>
-               {% endif %}
+
             <input type="text" id="input-changer" min='0' name="input-changer" placeholder="Buy some {{request.resolver_match.kwargs.stock_tick}}" 
             class="px-4 py-2 text-black bg-white rounded-md focus:outline-none border-4" autocomplete="off ">
             

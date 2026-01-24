@@ -321,14 +321,14 @@ form_execution.addEventListener('submit', function(e) {
 // Fetch the data for the buttons later, and put it inside the eventlistener :)
 
 // Fetched from the form_execution data
-document.addEventListener('DOMContentLoaded' , () =>{
+document.addEventListener('DOMContentLoaded' , async () =>{
 
     const status = sessionStorage.getItem('orderStatus');
     const message = sessionStorage.getItem('orderMessage');
         //  We don't need to fetch the data for the current price everytime. Therefore we don't need to have it as async function because of this situation.
 
-    const data_stock = fetch(`/api/latest-price/${stockTicker}/`);
-    const response = data_stock.json();
+    const data_stock = await fetch(`/api/latest-price/${stockTicker}/`);
+    const response =await  data_stock.json();
     
     current_price = parseFloat(response);
     
@@ -354,6 +354,25 @@ document.addEventListener('DOMContentLoaded' , () =>{
     //  We don't need to fetch the data for the current price everytime. Therefore we don't need to have it as async function because
 
 
+});
+
+
+const sharesInput = document.getElementById('total-cost');
+
+// We want to have a dynamic UI by adding a input event so we can have user know how much it will cost for them to buy the stock
+input_changer.addEventListener('input', async() => {
+    const res = await fetch(`/api/latest-price/${stockTicker}/`);
+    const data = await res.json();
+    cachedPrice = parseFloat(data.price);
+
+
+    const shares = parseFloat(input_changer.value);
+    if (!shares || shares <= 0) {
+        sharesInput.innerText = " Total Cost: $0.00";
+        return;
+    }
+    const total = shares * cachedPrice;
+    sharesInput.innerText = `Total Cost: $${total}`;
 });
 
 const totalReturn = document.getElementById('total-return')
