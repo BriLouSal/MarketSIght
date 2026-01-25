@@ -107,7 +107,8 @@
                   Buy some {{request.resolver_match.kwargs.stock_tick}}
                </p>
                <div class="text-white mt-4 p-4   rounded">
-
+                  
+                  <p id="total-cost"><strong id="strong-changer-total">Total Cost:</strong> $0.00</p>
 
                   {% if shares_owned > 0 %}
                   <p><strong>Shares Owned:</strong> {{ shares_owned }}</p>
@@ -119,9 +120,10 @@
                </div>
 
             <input type="text" id="input-changer" min='0' name="input-changer" placeholder="Buy some {{request.resolver_match.kwargs.stock_tick}}" 
-            class="px-4 py-2 text-black bg-white rounded-md focus:outline-none border-4" autocomplete="off ">
+            class="px-4 py-2 text-black bg-white rounded-md focus:outline-none border-4" autocomplete="off">
             
             <button type="submit" id="button-execute" class="bg-blue-600 border-4 w-full text-white text-[12px]">BUY</button>
+            <button type="button" id="button-max" class="bg-blue-600 border-4 w-full text-white text-[12px] mt-2">MAX</button>
 
          {% else %}
          <a href="{% url 'login' %}"> 

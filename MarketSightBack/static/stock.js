@@ -247,11 +247,13 @@ const input_changer = document.getElementById('input-changer');
 const button_execute_order = document.getElementById('button-execute');
 const form_execution = document.getElementById('form_execute');
 const strong_changer_total = document.getElementById('strong-changer-total');
+const execute = document.getElementById('button-execute');
 
+const max_button = document.getElementById('button-max');
 
 
 // If the button is clicked, we want to also grab the url for the stockOrders which will be worked on early (so we're gonna add that feature later)
-buy_button.addEventListener('click', (e) => {
+buy_button.addEventListener('click', async (e) => {
     e.preventDefault();
     text_changer.innerHTML =  `Buy some ${stockTicker}`;
     input_changer.placeholder = `Buy some ${stockTicker}`;
@@ -264,8 +266,6 @@ buy_button.addEventListener('click', (e) => {
 
     form_execution.action = `/trade/${stockTicker}/BUY/`;
     strong_changer_total.innerHTML = 'Total Cost: '
-
-
 })
 
 
@@ -285,7 +285,31 @@ sell_button.addEventListener('click', (e) => {
 
 })
 
+
+max_button.addEventListener('click', async () => {
+    const res = await fetch(`/api/latest-price/${stockTicker}/`);
+    const data = await res.json();
+    const price = parseFloat(data.price);
+    // Formula for how many shares a user can buy max: (Floor(User_capital / price) * 10000) / 10000
+
+    if (button_execute_order.innerText === 'BUY') {
+        const maxShares =
+            Math.floor((user_capital / price) * 10000) / 10000;
+
+        input_changer.value = maxShares;
+        sharesInput.innerText =
+            `Total Cost: $${(maxShares * price).toFixed(2)}`;
+    }
+    // This one is fairly easy, as we can just use how many shares the user has as the max shares they can sell.
+    if (button_execute_order.innerText === 'SELL') {
+        input_changer.value = shares;
+        sharesInput.innerText =
+            `Total Value: $${(shares * price).toFixed(2)}`;
+    }
+});
+
 // So what we wanna do is add a confirmation using swal js package, and also notification after it.
+
 
 // https://sweetalert2.github.io/ REMINDER
 form_execution.addEventListener('submit', function(e) {
