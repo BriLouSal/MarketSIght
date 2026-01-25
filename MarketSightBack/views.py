@@ -431,6 +431,7 @@ def json_data_api(date_api:str, stock: str) -> dict:
     elif  date_api == '1Y':
        period = '1y'
        interval = '1wk'
+
        period_inter = '2y'     
        yester_interval = '1mo'   
        interval_format = '%Y-%b'
@@ -999,7 +1000,6 @@ def portfolio_room(request, date='1D'):
 
         price = ticker_htst.loc[ticker]['close'].tolist()
         # We can switch this if we ever want to, I have a future plan :)
-        date_interval = '%H:%M'
         time_labels = [t.strftime(interval_format) for t in ticker_htst.loc[ticker].index]
 
 
@@ -1028,12 +1028,14 @@ def portfolio_room(request, date='1D'):
 
     # Grab the ticker list and we can do is make another dict and use list comp to manipulate the data in order to get the arrays for data set.
 
-    
-    
+    # Grab user profile
+    profile, _ = Profile.objects.get_or_create(username=request.user.username,
+                                                 defaults={'email': request.user.email})
     context = {
         'stock': result_of_stock,
+        'capital': round(profile.money_owned, 2),
         'json_data_set_stocks': json.dumps(result_of_stock),
-        'portfolio_val': sum_of_user_portfolio,
+        'portfolio_val': round(sum_of_user_portfolio, 2),
     }
 
     return render(request, 'base/portfolio_room.html', context)
