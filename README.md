@@ -17,11 +17,6 @@ MarketSight is a Python-powered analytics platform that backtests trading strate
 * Our Django-powered analyitics is not meant for day-trading, as it's meant usually for mid-term, or long-term investment due to its slow response time (which relies entirely on how many users will be using my product, as I've used a caching as my state management for the crucial part of my code that requires multiple API requests). Day-trading support would require me to implement web sockets
 ## Demo:
 
-![DEMO 6 NEW UPDATE!](MarketsightLoser.png)
-![DEMO 8 NEW UPDATE!](MarketSightconfirmation.png)
-![Noti!](MarketSightNoti.png)
-![View!](StockViewsComplete.png)
-
 
 ## Experiment (Testing out via Leveraged ETF): (JANUARY 7TH 2026 - Feburary 7th 2026) (Buying Short Position for short-term on META BEAR , and VIX long)
 ![GOOG EXPER](GOOG_EXPER.png)
