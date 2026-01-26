@@ -81,8 +81,11 @@ function buttonUpdate() {
         const data = await response.json();
     
         myChart.data.labels = data.labels;
+        
         myChart.data.datasets[0].data = data.prices.map(Number);
-
+        myChart.data.datasets[0].data = data.prices.map(Number);
+        // borderColor
+        
         myChart.update();
 
 
@@ -338,6 +341,7 @@ form_execution.addEventListener('submit', function(e) {
         sessionStorage.setItem('orderStatus', 'success'); 
         sessionStorage.setItem('orderMessage', `Successfully executed ${action} ${amount} of ${stockTicker}!`);
         form_execution.submit(); 
+        sessionStorage.setItem('lastAmount', amount);
 
     } else if (result.isDenied) {
         Swal.fire('Order cancelled', '', 'info');
@@ -353,15 +357,32 @@ document.addEventListener('DOMContentLoaded' , async () =>{
 
     const status = sessionStorage.getItem('orderStatus');
     const message = sessionStorage.getItem('orderMessage');
+    const amount = sessionStorage.getItem('lastAmount');
         //  We don't need to fetch the data for the current price everytime. Therefore we don't need to have it as async function because of this situation.
 
     const data_stock = await fetch(`/api/latest-price/${stockTicker}/`);
     const response =await  data_stock.json();
     
-    current_price = parseFloat(response);
+    const currentPrice = parseFloat(response.price);
     
     const current_value = (currentPrice * amount);
-    // If the curre
+    // If the current value is lower than the user's capital, it will do a rejection
+
+    if( current_value > user_capital) {
+            Swal.fire({
+            icon: status, // 'success', 'info', 'warning', 'error', 'question'
+            title: 'Not Enough Cpaital',
+            text:  `You don't have enough capital to buy ${stockTicker}!`,
+            timer: 3000, 
+            showConfirmButton: false,
+            position: 'top-end', 
+            toast: true
+        });
+        sessionStorage.clear();
+            return;
+        
+
+    }
 
     if (status && message) {
         Swal.fire({
@@ -377,6 +398,7 @@ document.addEventListener('DOMContentLoaded' , async () =>{
         // Clear the storage immediately after showing the alert
         sessionStorage.removeItem('orderStatus');
         sessionStorage.removeItem('orderMessage');
+        sessionStorage.removeItem('lastAmount');
     }
     
     //  We don't need to fetch the data for the current price everytime. Therefore we don't need to have it as async function because

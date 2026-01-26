@@ -744,6 +744,7 @@ def stock(request, stock_tick:str):
     avg_cost = None
     # We need to add if user is authetnicated   
     # Grab Position, 
+   
     if request.user.is_authenticated:
         position = StockPosition.objects.filter(
         user_portfolio__owner__username=request.user.username,
@@ -791,7 +792,7 @@ def stock(request, stock_tick:str):
 
 
     # Grab the yesterday price so that we can change the colour of the graph depending if it's green or red.
-    yesterday_price = data_json["yesterday_price"]
+    yesterday_price = data_json["yesterday_price"] or 0
     
     # NEEDED for bullish chart.js
     points = bullish_indicator(stock=stock_url)
