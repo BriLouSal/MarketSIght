@@ -43,7 +43,7 @@ canveses_port.forEach((canvas, index) => {
     else if (stock.current_price === stock.yesterday_price) return '#7df0ff';
 
     // Else it should be red
-    else return '#FF3131';
+    return '#FF3131';
 
     }
 
@@ -145,6 +145,7 @@ function buttonUpdate() {
 
         const interval = this.getAttribute('data-interval');
             // console.log("Fetching data for:", interval);
+        // Grab the stock  info via url.py routers (I love Django so much :) )
         const response = portfolioStocks.map(stock => 
                     fetch(`/api/json_data_api/${stock.ticker}/${interval}/`).then(res => res.json())
                 );
@@ -175,3 +176,28 @@ function buttonUpdate() {
     });
 }
 buttonUpdate();
+
+// Fetch this from my stock.js and adjust it
+
+
+ // #  ROI = [(Current Value / Total Cost) - 1] x 100%
+
+
+
+ const totalReturn = document.getElementById('total-return')
+
+
+function color_changer(){
+    if (capital_user > cost_of_user) return '#36ff0f';
+    return '#FF3131' 
+
+}
+const return_on_investment = ((valuePortfolio / cost_of_user) - 1) * 100
+
+
+totalReturn.innerHTML = `
+         <strong>Total Return:</strong>
+         <span style="color:${color_changer()}">
+         ${return_on_investment.toFixed(2)}%
+         </span>
+    `

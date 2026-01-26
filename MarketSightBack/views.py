@@ -512,6 +512,8 @@ CLAUDE = os.getenv('CLAUDE')
 
 alpaca_client = TradingClient(api_key=API_KEY, secret_key=SECRET_KEY)
 
+
+
 @sync_to_async
 def autocomplete(data: str):
     # Do multi-key sort
@@ -981,6 +983,7 @@ def portfolio_room(request, date='1D'):
     # We also want to grab the user's total value, so therefore keep a value that keeps track with all of them
 
     sum_of_user_portfolio = 0
+    cost_of_user_portfolio = 0
     for position in (user_stock_position):
         ticker = position.ticker
 
@@ -996,6 +999,13 @@ def portfolio_room(request, date='1D'):
         # sum += price * quantity
         
         sum_of_user_portfolio += current_price * quantity
+        cost_of_user_portfolio += avg_cost * quantity
+
+
+
+        # Another thing we can do is find avg_cost * quantity and do total rate of return of the user's investment
+
+
 
 
         price = ticker_htst.loc[ticker]['close'].tolist()
@@ -1033,6 +1043,7 @@ def portfolio_room(request, date='1D'):
                                                  defaults={'email': request.user.email})
     context = {
         'stock': result_of_stock,
+        'cost_of_user_portfolio': cost_of_user_portfolio,
         'capital': round(profile.money_owned, 2),
         'json_data_set_stocks': json.dumps(result_of_stock),
         'portfolio_val': round(sum_of_user_portfolio, 2),
@@ -1041,7 +1052,5 @@ def portfolio_room(request, date='1D'):
     return render(request, 'base/portfolio_room.html', context)
 
 
-
-    
 
 

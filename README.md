@@ -29,4 +29,5 @@ MarketSight is a Python-powered analytics platform that backtests trading strate
 ![GOOG EXPER 1](GOOG.png)
 ![META EXPER](metaexper.png)
 ![Buy Google](StockExper.png)
+![PORTFOLIO](PortfolioViewFinished.png)
 # SOLD: VIX 2x LONG at 6.35% return
