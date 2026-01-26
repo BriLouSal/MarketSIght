@@ -1,5 +1,7 @@
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth.models import User
+
 
 import yfinance as yf  # (currently unused, but keeping since you may use it later)
 import time            # (same here)
@@ -17,14 +19,15 @@ DEFAULT_VOTE = 0
 
 
 class Profile(models.Model):
-    username = models.CharField(max_length=100, null=True)
-    email = models.EmailField(null=True)
-    password = models.CharField(max_length=100)
-    created = models.DateField(auto_now_add=True)
+    user = models.OneToOneField(
+        User,
+        on_delete=models.CASCADE,
+        related_name="profile"
+    )
     # We want to have money for the Users to simulate stock trading. We'll do it in Model
     # to remain dynamic and not remain static in views.
     money_owned = models.IntegerField(default=MAX_CASH)
-
+    created = models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return self.username
 

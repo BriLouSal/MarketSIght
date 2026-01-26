@@ -808,34 +808,34 @@ def stock(request, stock_tick:str):
 def portfolio(request):
     return render(request, 'base/portfolio_room.html')
 
-def signup(request):
 
-    # We need to gather information, and we also need to check if the username exists in the database. If it does not, it shall proceed towards the signup, if not then we'll add a message_flash to warn user that the username exists in the database.
+def signup(request):
     if request.method == 'POST':
         email = request.POST.get('email')
-
-        
         username = request.POST.get('username')
-        
         password = request.POST.get('password')
 
-        
+        # We need to gather information, and we also need to check if the username exists in the database. If it does not, it shall proceed towards the signup, if not then we'll add a message_flash to warn user that the username exists in the database.
+
         if User.objects.filter(username=username).exists():
             messages.error(request, "This username already exists, please try again!")
             return render(request, 'base/authentication/signup.html')
-        
+
         if User.objects.filter(email=email).exists():
             messages.error(request, "This email already exists in the database, please try again!")
             return render(request, 'base/authentication/signup.html')
-        else:
-        
-            user = User.objects.create_user(username=username, password=password, email=email)
-        
-            messages.success(request, "Successfully Signed up, please use login page!")
-       
-            redirect("base/authentication/login.html")
+
+        user = User.objects.create_user(
+            username=username,
+            password=password,
+            email=email
+        )
+
+        messages.success(request, "Successfully signed up! Please log in.")
+        return redirect('login')  # <-- MUST return
 
     return render(request, 'base/authentication/signup.html')
+
 
 
 
