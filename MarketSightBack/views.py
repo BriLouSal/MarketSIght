@@ -808,34 +808,34 @@ def stock(request, stock_tick:str):
 def portfolio(request):
     return render(request, 'base/portfolio_room.html')
 
-
 def signup(request):
+
+    # We need to gather information, and we also need to check if the username exists in the database. If it does not, it shall proceed towards the signup, if not then we'll add a message_flash to warn user that the username exists in the database.
     if request.method == 'POST':
         email = request.POST.get('email')
+
+        
         username = request.POST.get('username')
+        
         password = request.POST.get('password')
 
-        # We need to gather information, and we also need to check if the username exists in the database. If it does not, it shall proceed towards the signup, if not then we'll add a message_flash to warn user that the username exists in the database.
-
+        
         if User.objects.filter(username=username).exists():
             messages.error(request, "This username already exists, please try again!")
             return render(request, 'base/authentication/signup.html')
-
+        
         if User.objects.filter(email=email).exists():
             messages.error(request, "This email already exists in the database, please try again!")
             return render(request, 'base/authentication/signup.html')
-
-        user = User.objects.create_user(
-            username=username,
-            password=password,
-            email=email
-        )
-
-        messages.success(request, "Successfully signed up! Please log in.")
-        return redirect('login')  # <-- MUST return
+        else:
+        
+            user = User.objects.create_user(username=username, password=password, email=email)
+        
+            messages.success(request, "Successfully Signed up, please use login page!")
+       
+            redirect("base/authentication/login.html")
 
     return render(request, 'base/authentication/signup.html')
-
 
 
 
@@ -851,12 +851,12 @@ def loginpage(request):
     # Check if user exists in the database, if not we can do a 
 
     if request.method == "POST":
-        user =  request.POST.get('email')
+        email =  request.POST.get('email')
 
         password = request.POST.get('password')
 
         # This will check if user authentication will exist
-        user = authenticate(request, email=(user), password=password)
+        user = authenticate(request, email=email , password=password)
 
         if user is None:
             messages.error(request, "This user does not exist, please signup or try again!")

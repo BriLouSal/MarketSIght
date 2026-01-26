@@ -23,7 +23,9 @@ class EmailBackend(BaseBackend):
             return None # This is my version of ensuring that email is required for login
         else:
             try:
-                user = User.objects.get(Q(username__iexact=email) | Q(email__iexact=email))
+                user = User.objects.get(
+                                Q(username__iexact=email) | Q(email__iexact=email)
+                            )
                 # This will ensure that our password is secure "password123" would
                 # turn into a convoluted mess
 
