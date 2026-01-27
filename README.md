@@ -20,9 +20,12 @@ MarketSight is a Python-powered analytics platform that backtests trading strate
 
 ## Experiment (Testing out via Leveraged ETF): (JANUARY 7TH 2026 - Feburary 7th 2026) (Buying Short Position for short-term on META BEAR , and VIX long)
 ![GOOG EXPER](GOOG_EXPER.png)
+
+
 # TESTING GLOBAL CRISIS INDICATOR (I AM HOLDING SHORT TERM SHORT POSITIONS)
 ![GOOG EXPER 1](GOOG.png)
 ![META EXPER](metaexper.png)
 ![Buy Google](StockExper.png)
 ![PORTFOLIO](PortfolioViewFinished.png)
 # SOLD: VIX 2x LONG at 6.35% return
+![Proof](Proof.png)

@@ -255,7 +255,6 @@ def stockOrder(request, ticker, order_type):
             if user.money_owned < transaction:
                 order.status = StockOrder.Status.REJECTED
                 order.save()
-                messages.error(request, "Insufficient capital.")
                 return redirect("stock", stock_tick=ticker)
 
             #  We wanna subtract the user's capital with the transaction cost
@@ -285,7 +284,6 @@ def stockOrder(request, ticker, order_type):
             if not position or position.quantity < quantity:
                 order.status = StockOrder.Status.REJECTED
                 order.save()
-                messages.error(request, 'You do not have the quantity to own the stock or own the stock.')
                 return redirect("stock", stock_tick=ticker)
             # First order of business is to add the money towards its user
             # Since we're selling, AND also subtract stock.quantity 
@@ -306,13 +304,7 @@ def stockOrder(request, ticker, order_type):
         else:
             order.status = StockOrder.Status.CANCELED
             order.save()
-            messages.error(request, "Invalid order type.")
             return redirect("stock", stock_tick=ticker)
-
-        messages.success(
-            request,
-            f"{order.order_choice} {quantity} {ticker} @ ${current_price}"
-        )
         return redirect('stock', stock_tick=ticker)
 
 
