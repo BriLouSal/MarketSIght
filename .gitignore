@@ -3,3 +3,4 @@ MarketSight/.env
 MarketSightBack/.env
 MarketSightBack/training_models.py
 db.sqlite3
+MarketSight/settings.py
