@@ -185,12 +185,12 @@
    const stockTicker = "{{ request.resolver_match.kwargs.stock_tick }}";
    const chartLabels = {{ stock_graph|safe }};
    const chartPrices = {{ stock_price|safe }};
-   const average_cost = {{avg_cost | safe}};
-   const user_capital = {{capital | safe}};
    const points = {{bullish_indicator | safe}};
    const scoreOfCapm = {{capm_score_of_stock | safe}};
    const Chart_yesterday_price = {{yesterday_price | safe}};
       // Should be last, as it reliant on if the user owns the stock or not
+   const user_capital = {{capital | safe}};
+   const average_cost = {{avg_cost | safe}};
    const shares = {{shares_owned | safe}};
 
 
