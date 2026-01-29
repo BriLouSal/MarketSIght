@@ -29,3 +29,4 @@ MarketSight is a Python-powered analytics platform that backtests trading strate
 ![PORTFOLIO](PortfolioViewFinished.png)
 # SOLD: VIX 2x LONG at 6.35% return
 ![Proof](Proof.png)
+![Proof1](Proofof.png)
