@@ -496,13 +496,13 @@ async def latest_price(request, stock):
 API_KEY = os.getenv('ALPACA')
 
 
-SECRET_KEY = os.getenv('SECRET_KEY')
+ALPACA_SECRET_KEY  = os.getenv('ALPACA_SECRET_KEY')
 
 
-CLAUDE = os.getenv('CLAUDE')
 
 
-alpaca_client = TradingClient(api_key=API_KEY, secret_key=SECRET_KEY)
+
+alpaca_client = TradingClient(api_key=API_KEY, secret_key=ALPACA_SECRET_KEY , paper=True)
 
 
 
@@ -531,65 +531,64 @@ def autocomplete(data: str):
     }
     
     data = data.upper()
-    try:
-        stock_param = GetAssetsRequest(
-            status= AssetStatus.ACTIVE,
-            asset_class= AssetClass.US_EQUITY,
 
-        )
-        asset = alpaca_client.get_all_assets(stock_param)
-        cache.set(ASSET_CACHE_KEY, asset, 86400)
-       
-        FORBIDDEN_EXCHANGE = ['ARCA', 'OTC']
-       
-        # Stock rec using  list comp
-            
-        # We want to short via marketCapshare for the trendiest stock to be int he top of the autocomplete.
-        # For better User Experience
-        # Filter out Leverage ETF, and OTC.
+    stock_param = GetAssetsRequest(
+        status= AssetStatus.ACTIVE,
+        asset_class= AssetClass.US_EQUITY,
 
-
-        RESTRICTED_WORD = 'ETF'
-        stock_rec = [a for a in asset if a.symbol.upper().startswith(data.upper()) and a.tradable and (a.exchange.value not in FORBIDDEN_EXCHANGE) 
-                     and (a.exchange.value != 'BATS') and RESTRICTED_WORD not in (a.name or '').upper() ][:80]
+    )
+    asset = alpaca_client.get_all_assets(stock_param)
+    cache.set(ASSET_CACHE_KEY, asset, 86400)
+    
+    FORBIDDEN_EXCHANGE = ['ARCA', 'OTC']
+    
+    # Stock rec using  list comp
         
-        
-        
-        stock_ticker = Ticker(symbols=stock_rec)
+    # We want to short via marketCapshare for the trendiest stock to be int he top of the autocomplete.
+    # For better User Experience
+    # Filter out Leverage ETF, and OTC.
 
-        data_price = stock_ticker.price
-        # Needed for popularity of stock sorting
 
-        def grab_market_cap(esc):
-            return data_price.get(esc, {}).get("marketCap", 0) or 0
-        def grab_top_exchange_rate(a):
-            return TOP_EXCHANGE.get(a.exchange, 1)
-        def grab_volume(sym):
-            return data_price.get(sym, {}).get('regularMarketVolume',  0) or 0
-        
-        
-        stock_rec.sort(
-            key=lambda a: (
-                grab_market_cap(a.symbol),
-                grab_volume(a.symbol),
-                grab_top_exchange_rate(a),
+    RESTRICTED_WORD = 'ETF'
+    stock_rec = [a for a in asset if a.symbol.upper().startswith(data.upper()) and a.tradable and (a.exchange.value not in FORBIDDEN_EXCHANGE) 
+                    and (a.exchange.value != 'BATS') and RESTRICTED_WORD not in (a.name or '').upper() ][:80]
+    
+    
+    
+    stock_ticker = Ticker(symbols=stock_rec)
 
-            ),
-            reverse=True
-        )
+    data_price = stock_ticker.price
+    # Needed for popularity of stock sorting
 
-        result = stock_rec[:11]
-        cache.set(cache_key, result, timeout=60 * 5)
-        
-        return result
+    def grab_market_cap(esc):
+        return data_price.get(esc, {}).get("marketCap", 0) or 0
+    def grab_top_exchange_rate(a):
+        return TOP_EXCHANGE.get(a.exchange, 1)
+    def grab_volume(sym):
+        return data_price.get(sym, {}).get('regularMarketVolume',  0) or 0
+    
+    
+    stock_rec.sort(
+        key=lambda a: (
+            grab_market_cap(a.symbol),
+            grab_volume(a.symbol),
+            grab_top_exchange_rate(a),
+
+        ),
+        reverse=True
+    )
+
+    result = stock_rec[:11]
+    cache.set(cache_key, result, timeout=60 * 5)
+    
+    return result
 
 
     
     
         # We want to short via marketCapshare for the trendiest stock to be int he top of the autocomplete.
 
-    except Exception as e:
-        return(f"Status: {e}")
+
 
 # Output: [{'exchange': 'NYQ', 'shortname': 'Agilent Technologies, Inc.', 'quoteType': 'EQUITY', 'symbol': 'A', 'index': 'quotes', 'score': 10046500.0, 'typeDisp': 'Equity', 'longname': 'Agilent Technologies, Inc.', 'exchDisp': 'NYSE', 'sector': 'Healthcare', 'sectorDisp': 'Healthcare', 'industry': 'Diagnostics & Research', 'industryDisp': 'Diagnostics & Research', 'dispSecIndFlag': False, 'isYahooFinance': True}, {'exchange': 'NYM', 'shortname': 'Platinum Apr 26', 'quoteType': 'FUTURE', 'symbol': 'PL=F', 'index': 'quotes', 'score': 3003200.0, 'typeDisp': 'Futures', 'exchDisp': 'NY Mercantile', 'isYahooFinance': True}, {'exchange': 'CMX', 'shortname': 'Aluminum Futures,Mar-2026', 'quoteType': 'FUTURE', 'symbol': 'ALI=F', 'index': 'quotes', 'score': 3000600.0, 'typeDisp': 'Futures', 'exchDisp': 'New York Commodity Exchange', 'isYahooFinance': True}, {'exchange': 'NGM', 'quoteType': 'EQUITY', 'symbol': 'SVAQU', 'index': 'quotes', 'score': 100004.0, 'typeDisp': 'Equity', 'longname': 'Silicon Valley Acquisition Corp.', 'exchDisp': 'NASDAQ', 'sector': 'Financial Services', 'sectorDisp': 'Financial Services', 'industry': 'Shell Companies', 'industryDisp': 'Shell Companies', 'isYahooFinance': True}, {'exchange': 'NCM', 'quoteType': 'EQUITY', 'symbol': 'NBRGU', 'index': 'quotes', 'score': 100002.0, 'typeDisp': 'Equity', 'longname': 'Newbridge Acquisition Limited', 'exchDisp': 'NASDAQ', 'sector': 'Financial Services', 'sectorDisp': 'Financial Services', 'industry': 'Shell Companies', 'industryDisp': 'Shell Companies', 'isYahooFinance': True}, {'exchange': 'NGM', 'quoteType': 'EQUITY', 'symbol': 'IGACR', 'index': 'quotes', 'score': 100001.0, 'typeDisp': 'Equity', 'longname': 'Invest Green Acquisition Corporation', 'exchDisp': 'NASDAQ', 'isYahooFinance': True}, {'exchange': 'CCY', 'shortname': 'AUD/USD', 'quoteType': 'CURRENCY', 'symbol': 'AUDUSD=X', 'index': 'quotes', 'score': 30109.0, 'typeDisp': 'Currency', 'longname': 'AUD/USD', 'exchDisp': 'CCY', 'isYahooFinance': True}]
 
