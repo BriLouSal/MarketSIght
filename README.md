@@ -6,7 +6,8 @@ MarketSight is a Python-powered analytics platform that backtests trading strate
 
 # Backend: 
 * We've used Django for this project, as I personally started this project initially just to learn Django, and I've gotten interested about API, and I figured that it's easy to use url routing in order to connect my views.py towards JS and visualize information seamlessly, and I found it pretty decent. Django also has a built in caching tool, which I used to potentially handle millions of user and used cache timeoue for performance optimization, and we're likely to see much  more accurate data, which I wish to provide as investing is a high-risk high-reward endeavour, and I sincerely believe that information can empower investors over reckless decisions. 
-
+* Furthermore, we've maintained transaciton integrity by using transaction.atomic from the built in function from Django, which was useful, as it's important to maintain integrity to prevent corruption of data, and also increased reliability and prevent the risk of network issue and data corruption.
+   
 
 # Data Used:
 * For Marketsight, we've used YahooQuery and Alpaca for my financial data.
