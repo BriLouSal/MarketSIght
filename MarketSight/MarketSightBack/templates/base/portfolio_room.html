@@ -1,0 +1,130 @@
+{% load static tailwind_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   {% tailwind_css %}
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="stylesheet" href="{% static 'portfolio.css' %}">
+   <title>Portfolio Room</title>
+   
+</head>
+<body>
+
+   
+
+      <div class="navbar">
+      <a href="{% url 'assistance' %}">Support</a>
+      <a href="{% url 'room' %}">Portfolio</a>
+
+      {% if user.is_authenticated %}
+         <a href="{% url 'logout_page' %}">Logout</a>
+      {% else %}
+         <a href="{% url 'login' %}">Login</a>
+      {% endif %}
+      <a href="{% url 'search' %}">Search</a>
+      <!-- For Portfolio, I wanna have a redirection if the condiition is not met that will make sure users are signed up --> 
+   </div>
+
+
+<!-- Wrapper so the section are close to each other, and it's not in another sections -->
+<div class="flex flex-row overflow-hidden h-screen gap-10 items-start justify-start">
+      <!-- Wrapper for the stock graph sidebar  -->
+   <section class="flex flex-col gap-5 border-r border-blue-300 shadow-[0_0_15px_rgba(34,211,238,0.8)] bg-[#1a1a1a] w-64 h-full overflow-y-auto shrink-0">
+      
+      {% for stocks in stock %}
+      <div class="flex flex-col p-4 border-b border-gray-800 w-full">
+         <h3 class="text-gray-200 text-[14px] text-center mb-2">{{stocks.ticker}}</h3>
+         
+         <div class="relative h-24 w-full">
+            <canvas class="stockGraph"></canvas>
+         </div>
+      </div>
+      {% endfor %}
+
+   </section>
+
+      <!-- Wrapper for the main graph: Database needed: We need the chartPrices aggerregated via the portfolio change. Such as that -->
+
+
+      <!-- Graph and it's wrapper -->
+   <section class="flex-1 flex flex-col p-8 gap-3">
+      <div class="flex flex-col gap-4">
+         <h2 class="text-white text-2xl font-bold mb-6 ">{{user.username}}'s Portfolio Performance</h2>
+         <p class="text-white text-2xl font-bold"><strong>Portfolio Value: </strong>
+         ${{portfolio_val}}</p>
+         <p class="text-white text-2xl font-bold"><strong>{{user.username}}'s Remaining  Capital: </strong>
+            ${{capital | safe}}
+         </p>
+            <p class="text-white text-2xl font-bold" id="total-return"><strong>Total Return</strong>
+         </p>
+
+
+
+      </div>
+
+        <!--Text and also create canva wrapper   -->   
+      <div class="relative h-[500px] w-full max-w-5xl border-2 border-cyan-300 shadow-[0_0_15px_rgba(34,211,238,0.8)] bg-[#0a0a0a]">
+         <canvas id="portfolioGraph"></canvas>
+         <canvas id="bullishGraph"></canvas>
+      </div>
+
+      <div class="-full max-w-5xl flex flex-row gap-2 mt-4 ">
+         
+         <button class="interval  hover:bg-blue-300 hover:text-white"
+                 data-interval="1D" href="/room/1D/">1D</button>
+
+         <button class="interval  text-gray-950 hover:bg-blue-300 hover:text-white"
+                 data-interval="1W" href="/room/1W/">1W</button>
+
+         <button class="interval  text-gray-950 hover:bg-blue-300 hover:text-white"
+                 data-interval="1M" href="/room/1M/">1M</button>
+
+         <button class="interval text-gray-950 hover:bg-blue-300 hover:text-white"
+                 data-interval="1Y" ahref="/room/1Y/">1Y</button>
+      </div>
+
+   </section>
+
+</div>
+
+
+
+    <div class="portfolio-summary">
+        <!-- Insert AI  -->
+    </div>
+
+                  
+
+
+<!-- Yahoo Finance Display -->
+
+   
+{% block scripts %}
+<script>
+   const capital_user = {{ capital|safe }};
+   const valuePortfolio = {{portfolio_val| safe}}
+   const cost_of_user = {{ cost_of_user_portfolio|safe }};
+   const portfolioStocks = {{ json_data_set_stocks|safe }};
+   console.log(portfolioStocks);
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{% static 'portfolio.js'%}" defer></script>
+{% endblock scripts %}
+
+
+
+ 
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
