@@ -16,9 +16,7 @@ MarketSight/settings.py
 !package.json
 db.sqlite3
 
-*.png
-*.jpg
-*.jpeg
+
 
 **/__pycache__/
 *.py[cod]
